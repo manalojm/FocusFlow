@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FocusFlow1</string>
+    <string name="login_text">Login</string>
+    <string name="name" />
+    <string name="name_of_user" />
+
+</resources>
