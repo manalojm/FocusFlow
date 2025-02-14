@@ -42,7 +42,11 @@
         android:textSize="20dp"
         android:background="@drawable/diag_box"
         android:padding="5dp"
-        android:layout_marginLeft="70dp">
+        android:layout_marginLeft="70dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clickable="true"
+        >
     </EditText>
 
     <EditText
@@ -53,16 +57,20 @@
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:hint="Password"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:textColorHint="@color/black"
         android:textSize="20dp"
         android:background="@drawable/diag_box"
         android:padding="5dp"
-        android:layout_marginLeft="70dp">
+        android:layout_marginLeft="70dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clickable="true"
+        >
     </EditText>
 
     <Button
-        android:id="@+id/login.btn"
+        android:id="@+id/login_btn"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginLeft="125dp"
@@ -72,15 +80,15 @@
         android:text="Login"
         android:textColor="@color/black" />
 
-    <EditText
-        android:id="@+id/create.acc"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:hint="Create an account."
-        android:inputType="text"
-        android:layout_marginTop="400dp"
-        android:textColorHint="@color/white"
-        android:textSize="15dp">
-    </EditText>
+<!--    <EditText-->
+<!--        android:id="@+id/create_acc"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:gravity="center"-->
+<!--        android:hint="Create an account."-->
+<!--        android:inputType="text"-->
+<!--        android:layout_marginTop="400dp"-->
+<!--        android:textColorHint="@color/white"-->
+<!--        android:textSize="15dp">-->
+<!--    </EditText>-->
 </RelativeLayout>

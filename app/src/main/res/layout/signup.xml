@@ -125,17 +125,17 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <EditText
-        android:id="@+id/create.acc"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_below="@id/box"
-        android:hint="Already have an account? Login."
-        android:inputType="text"
-        android:layout_marginTop="490dp"
-        android:textColorHint="@color/white"
-        android:textSize="15dp"
-        tools:ignore="NotSibling">
-    </EditText>
+<!--    <Button-->
+<!--        android:id="@+id/login_acc"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_below="@id/box"-->
+<!--        android:hint="Already have an account? Login."-->
+<!--        android:inputType="text"-->
+<!--        android:layout_marginTop="490dp"-->
+<!--        android:textColorHint="@color/white"-->
+<!--        android:textSize="15dp"-->
+<!--        tools:ignore="NotSibling">-->
+<!--    </Button>-->
 </RelativeLayout>
