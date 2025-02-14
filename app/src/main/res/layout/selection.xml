@@ -17,6 +17,59 @@
     </View>
 
     <View
+        android:id="@+id/timebox"
+        android:layout_width="330dp"
+        android:layout_height="180dp"
+        android:background="@drawable/box"
+        android:layout_below="@id/menuHead"
+        android:layout_marginTop="150dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+    </View>
+
+    <View
+        android:id="@+id/appbox"
+        android:layout_width="330dp"
+        android:layout_height="100dp"
+        android:background="@drawable/box"
+        android:layout_below="@id/timebox"
+        android:layout_marginTop="400dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false">
+    </View>
+
+    <Button
+        android:id="@+id/restrict_btn"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="560dp"
+        android:backgroundTint="#24CDA0"
+        android:text="Restrict"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:id="@+id/cancel_btn"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="560dp"
+        android:backgroundTint="#24CDA0"
+        android:text="Cancel"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <View
         android:id="@+id/menuBackground"
         android:layout_width="0dp"
         android:layout_height="100dp"
