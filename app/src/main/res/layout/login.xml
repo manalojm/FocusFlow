@@ -28,9 +28,7 @@
         android:textSize="40dp"
         android:paddingBottom="60dp"
         android:paddingTop="250dp"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:clickable="false">
+        android:enabled="false">
     </EditText>
 
     <EditText
@@ -45,6 +43,8 @@
         android:textSize="20dp"
         android:background="@drawable/diag_box"
         android:padding="5dp"
+        android:layout_marginRight="70dp"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginLeft="70dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
@@ -65,7 +65,9 @@
         android:textSize="20dp"
         android:background="@drawable/diag_box"
         android:padding="5dp"
+        android:layout_marginRight="70dp"
         android:layout_marginLeft="70dp"
+        app:layout_constraintStart_toStartOf="parent"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:clickable="true"
