@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <View
+        android:id="@+id/menuHead"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/menu"
+        android:layout_centerInParent="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+    </View>
+
+    <View
+        android:id="@+id/menuBackground"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:background="@drawable/menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:clickable="true"
+        android:contentDescription="return"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:focusable="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/arrow_back"
+        tools:ignore="MissingConstraints" />
+
+    <ImageButton
+        android:id="@+id/home"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="164dp"
+        android:contentDescription="Home"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="centerInside"
+        android:src="@drawable/home"
+        app:layout_constraintBottom_toBottomOf="@id/menuBackground"
+        app:layout_constraintStart_toStartOf="@id/menuBackground"
+        app:layout_constraintTop_toTopOf="@id/menuBackground"
+        />
+    <ImageButton
+        android:id="@+id/account"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="32dp"
+        android:contentDescription="Account"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="centerInside"
+        android:src="@drawable/account_circle"
+        app:layout_constraintBottom_toBottomOf="@id/menuBackground"
+        app:layout_constraintEnd_toEndOf="@id/menuBackground"
+        app:layout_constraintTop_toTopOf="@id/menuBackground"
+        />
+    <ImageButton
+        android:id="@+id/stats"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="32dp"
+        android:contentDescription="Status"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="centerInside"
+        android:src="@drawable/stats"
+        app:layout_constraintBottom_toBottomOf="@id/menuBackground"
+        app:layout_constraintStart_toStartOf="@id/menuBackground"
+        app:layout_constraintTop_toTopOf="@id/menuBackground"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
