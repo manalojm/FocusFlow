@@ -1,9 +1,8 @@
-package com.example.focusflow1;
+package com.example.focusflow;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 

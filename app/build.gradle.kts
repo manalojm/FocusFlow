@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.focusflow1"
+    namespace = "com.example.focusflow"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.focusflow1"
+        applicationId = "com.example.focusflow"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

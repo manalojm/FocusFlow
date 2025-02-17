@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "FocusFlow1"
+rootProject.name = "FocusFlow"
 include(":app")
  

@@ -1,4 +1,4 @@
-package com.example.focusflow1;
+package com.example.focusflow;
 
 import org.junit.Test;
 
