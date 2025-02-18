@@ -16,37 +16,46 @@
         app:layout_constraintEnd_toEndOf="parent">
     </View>
 
+    <TextView
+        android:id="@+id/timeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintTop_toBottomOf="@id/menuHead"
+        android:text="Set Time"
+        android:textColor="@android:color/white"
+        android:textSize="25dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginEnd="150dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:enabled="false"
+        />
+
     <View
         android:id="@+id/timebox"
         android:layout_width="330dp"
         android:layout_height="255dp"
         android:background="@drawable/box"
         android:layout_below="@id/menuHead"
-        android:layout_marginTop="150dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="40dp"
+        app:layout_constraintTop_toBottomOf="@id/timeTxt"
+        app:layout_constraintStart_toStartOf="parent">
     </View>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="50dp"
         android:background="#24cda0"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="20dp"
+        app:layout_constraintTop_toBottomOf="@id/timeTxt"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Set Time"
-            android:textColor="@android:color/white"
-            android:textSize="25dp" />
+        >
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -96,14 +105,30 @@
             android:textStyle="italic" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/appTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@id/appbox"
+        android:text="Select App"
+        android:textColor="@android:color/white"
+        android:textSize="25dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginEnd="150dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:enabled="false"
+        />
+
     <View
         android:id="@+id/appbox"
         android:layout_width="330dp"
-        android:layout_height="150dp"
+        android:layout_height="130dp"
         android:background="@drawable/box"
-        android:layout_below="@id/timebox"
-        android:layout_marginBottom="300dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_above="@id/menuBackground"
+        android:layout_marginTop="100dp"
+        app:layout_constraintTop_toBottomOf="@id/timebox"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:focusable="true"
@@ -116,11 +141,11 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
-        android:layout_marginBottom="200dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="#24CDA0"
         android:text="Restrict"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbox"
         app:layout_constraintStart_toStartOf="parent"
         />
 
@@ -129,11 +154,11 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginBottom="200dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="#24CDA0"
         android:text="Cancel"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbox"
         app:layout_constraintEnd_toEndOf="parent"
         />
 
