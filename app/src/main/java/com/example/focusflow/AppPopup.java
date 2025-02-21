@@ -2,11 +2,18 @@ package com.example.focusflow;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.focusflow.AppPopupClasses.AppInfo;
+import com.example.focusflow.AppPopupClasses.ListAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,20 +29,27 @@ public class AppPopup extends AppCompatActivity {
         // initialise layout
         listView = findViewById(R.id.listview);
         text = findViewById(R.id.totalapp);
-        getallapps();
+        try {
+            getallapps();
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
-    public void getallapps(){
+    public void getallapps() throws PackageManager.NameNotFoundException {
         List<PackageInfo> packList = getPackageManager().getInstalledPackages(0);
-        List<String> appNames = new ArrayList<>();
-        for (PackageInfo packInfo : packList){
-            if ( (packInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0){
-                String appName = packInfo.applicationInfo.loadLabel(getPackageManager()).toString();
-                appNames.add(appName);
+        List<AppInfo> appInfoList = new ArrayList<>();
+
+        for (PackageInfo info : packList) {
+            if ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) { //Check if valid application
+                String appName = info.applicationInfo.loadLabel(getPackageManager()).toString();
+                Drawable appIcon = getPackageManager().getApplicationIcon(info.packageName);
+                appInfoList.add(new AppInfo(appName, appIcon));
             }
         }
-        listView.setAdapter(new ArrayAdapter<String>(AppPopup.this, android.R.layout.simple_list_item_1, appNames));
-        text.setText(appNames.size() + " Apps are installed");
-    }
 
+        listView.setAdapter(new ListAdapter(this, appInfoList));
+        text.setText(appInfoList.size() + " Apps are installed");
+    }
 }
+
 
