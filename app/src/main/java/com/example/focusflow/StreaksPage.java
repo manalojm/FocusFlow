@@ -12,11 +12,11 @@ public class StreaksPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.streaks);
-        ImageButton btnSelectionPage = findViewById(R.id.stats);
-        btnSelectionPage.setOnClickListener(new View.OnClickListener() {
+        ImageButton btnHomePage = findViewById(R.id.home);
+        btnHomePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(StreaksPage.this, SelectionPage.class);
+                Intent intent = new Intent(StreaksPage.this, Dashboard.class);
                 startActivity(intent);
                 finish();
             }
