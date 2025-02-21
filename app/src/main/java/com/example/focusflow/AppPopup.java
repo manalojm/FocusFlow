@@ -1,12 +1,15 @@
 package com.example.focusflow;
 
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +37,15 @@ public class AppPopup extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             throw new RuntimeException(e);
         }
+        ImageButton btnBack = findViewById(R.id.backButton);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AppPopup.this, Dashboard.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
     public void getallapps() throws PackageManager.NameNotFoundException {
         List<PackageInfo> packList = getPackageManager().getInstalledPackages(0);

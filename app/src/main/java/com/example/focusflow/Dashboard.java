@@ -47,5 +47,14 @@ public class Dashboard extends AppCompatActivity {
                 finish();
             }
         });
+        ImageButton btnHomePage = findViewById(R.id.account);
+        btnHomePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Dashboard.this, ProfileActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
