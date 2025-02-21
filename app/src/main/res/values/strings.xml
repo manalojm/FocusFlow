@@ -3,9 +3,5 @@
     <string name="login_text">Login</string>
     <string name="name" />
     <string name="name_of_user" />
-    <string name="create_an_account">Create an account.</string>
-    <string name="already_have_an_account_login">Already have an account? Login.</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="confirm_password">Confirm Password</string>
 
 </resources>

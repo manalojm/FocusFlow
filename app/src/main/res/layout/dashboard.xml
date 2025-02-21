@@ -16,6 +16,51 @@
         app:layout_constraintEnd_toEndOf="parent">
     </View>
 
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <RelativeLayout
+            android:id="@+id/progress_layout"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:layout_marginTop="200dp">
+
+            <!--progress bar implementation-->
+
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/circular"
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/timer_circle"
+                android:textAlignment="center"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:id="@+id/progress_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="---"
+                android:textColor="#FFFFFF"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
     <View
         android:id="@+id/menuBackground"
         android:layout_width="0dp"
@@ -26,18 +71,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="80dp"
-        android:layout_height="100dp"
-        android:clickable="true"
-        android:contentDescription="return"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:focusable="true"
-        android:scaleType="centerInside"
-        android:src="@drawable/arrow_back"
-        tools:ignore="MissingConstraints" />
-
-    <ImageButton
         android:id="@+id/home"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -46,6 +79,8 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="centerInside"
         android:src="@drawable/home"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@id/menuBackground"
         app:layout_constraintStart_toStartOf="@id/menuBackground"
         app:layout_constraintTop_toTopOf="@id/menuBackground"
@@ -59,6 +94,8 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="centerInside"
         android:src="@drawable/account_circle"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@id/menuBackground"
         app:layout_constraintEnd_toEndOf="@id/menuBackground"
         app:layout_constraintTop_toTopOf="@id/menuBackground"
@@ -72,6 +109,8 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="centerInside"
         android:src="@drawable/stats"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@id/menuBackground"
         app:layout_constraintStart_toStartOf="@id/menuBackground"
         app:layout_constraintTop_toTopOf="@id/menuBackground"
