@@ -1,31 +1,61 @@
 package com.example.focusflow;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class Login extends AppCompatActivity {
 
-    private EditText usernameInput;
-    private EditText passwordInput;
-    private Button loginButton;
+    EditText editTextEmail, editTextPassword;
+    Button buttonLogin;
+    FirebaseAuth mAuth;
+    TextView textView;
 
-    @SuppressLint("MissingInflatedId")
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            Intent intent = new Intent(Login.this, Dashboard.class); // Redirect to Dashboard instead of Login
+            startActivity(intent);
+            finish();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.login);
+        mAuth = FirebaseAuth.getInstance();
+
+        editTextEmail = findViewById(R.id.username);
+        editTextPassword = findViewById(R.id.password);
+        buttonLogin = findViewById(R.id.login_btn);
+        textView = findViewById(R.id.registerNow);
+
+        textView.setOnClickListener(v -> {
+            Intent intent = new Intent(Login.this, SignUpPage.class);
+            startActivity(intent);
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -33,21 +63,33 @@ public class Login extends AppCompatActivity {
             return insets;
         });
 
-        usernameInput = findViewById(R.id.username);
-        passwordInput = findViewById(R.id.password);
-        loginButton = findViewById(R.id.login_btn);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Login.this, Dashboard.class);
-                startActivity(intent);
-                finish();
+        buttonLogin.setOnClickListener(v -> {
+            String email = editTextEmail.getText().toString().trim();
+            String password = editTextPassword.getText().toString().trim();
+
+            // Prevent login with empty fields
+            if (TextUtils.isEmpty(email)) {
+                Toast.makeText(Login.this, "Enter email", Toast.LENGTH_SHORT).show();
+                return;
             }
+            if (TextUtils.isEmpty(password)) {
+                Toast.makeText(Login.this, "Enter password", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Firebase authentication
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(Login.this, "Login Successful.", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(Login.this, Dashboard.class); // Redirect to Dashboard
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(Login.this, "Authentication failed: " + task.getException().getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
         });
-//        loginButton.setOnClickListener(v -> {
-//            String username = usernameInput.getText().toString().trim();
-//            String password = passwordInput.getText().toString().trim();
-//            Log.i("Test Credentials", "Username: " + username + ", Password: " + password);
-//        });
     }
 }
