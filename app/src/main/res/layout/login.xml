@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    tools:context=".Main">
+    android:background="@drawable/background">
+<!--    tools:context=".Dashbaord">-->
 
 
     <View
@@ -85,11 +85,11 @@
 
     <TextView
         android:id="@+id/registerNow"
-        android:text="@string/create_an_account"
+        android:text="@+string/create_an_account"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:gravity="center"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="50dp"
         android:layout_below="@+id/login_btn"
         android:clickable="true"
         android:focusable="true"/>
