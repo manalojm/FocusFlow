@@ -4,42 +4,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SelectionPage extends AppCompatActivity {
-    ListView listView;
-    TextView text;
-    private View viewApps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selection);
-        viewApps = findViewById(R.id.appbox);
-        View appBox = findViewById(R.id.appbox);
-        appBox = findViewById(R.id.appbox);
-        appBox.setClickable(true);
-        appBox.setFocusable(true);
-        appBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SelectionPage.this, AppPopup.class);
-                startActivity(intent);
-                finish();
-            }
-        });
 
-        viewApps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent movePage = new Intent(SelectionPage.this, AppPopup.class);
-                startActivity(movePage);
-                finish();
-            }
-        });
+        //Buttons
+        View viewApps = findViewById(R.id.appbox);
+        viewApps.requestFocus();
 
+        //Navigation
+        NavigationUtility.setNavigation(this,viewApps,AppPopup.class);
 
     }
 }

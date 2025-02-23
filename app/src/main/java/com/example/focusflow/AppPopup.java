@@ -28,31 +28,28 @@ public class AppPopup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_popup);
-
-        // initialise layout
         listView = findViewById(R.id.listview);
         text = findViewById(R.id.totalapp);
+
+        ImageButton btnBack = findViewById(R.id.backButton);
+        NavigationUtility.setNavigation(this,btnBack,SelectionPage.class);
+
         try {
             getallapps();
         } catch (PackageManager.NameNotFoundException e) {
             throw new RuntimeException(e);
         }
-        ImageButton btnBack = findViewById(R.id.backButton);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AppPopup.this, Dashboard.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
+
+
+
     public void getallapps() throws PackageManager.NameNotFoundException {
         List<PackageInfo> packList = getPackageManager().getInstalledPackages(0);
         List<AppInfo> appInfoList = new ArrayList<>();
 
         for (PackageInfo info : packList) {
             if ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) { //Check if valid application
+                System.out.println(info.packageName); //Testing
                 String appName = info.applicationInfo.loadLabel(getPackageManager()).toString();
                 Drawable appIcon = getPackageManager().getApplicationIcon(info.packageName);
                 appInfoList.add(new AppInfo(appName, appIcon));

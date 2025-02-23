@@ -18,43 +18,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dashboard extends AppCompatActivity {
-    ListView listView;
-    TextView text;
-    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
+
+        //Buttons
         ProgressBar progressBar = findViewById(R.id.progress_bar);
-        progressBar = findViewById(R.id.progress_bar);
-        progressBar.setClickable(true);
-        progressBar.setFocusable(true);
-        progressBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Dashboard.this, SelectionPage.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        ImageButton btnSelectionPage = findViewById(R.id.stats);
-        btnSelectionPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Dashboard.this, StreaksPage.class);
-                startActivity(intent);
-                finish();
-            }
-        });
         ImageButton btnHomePage = findViewById(R.id.account);
-        btnHomePage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Dashboard.this, ProfileActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        ImageButton btnSelectionPage = findViewById(R.id.stats);
+
+        //Navigation
+        NavigationUtility.setNavigation(this,progressBar,SelectionPage.class);
+        NavigationUtility.setNavigation(this,btnSelectionPage,StreaksPage.class);
+        NavigationUtility.setNavigation(this,btnHomePage,ProfileActivity.class);
+
     }
 }
