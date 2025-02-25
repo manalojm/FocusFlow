@@ -16,7 +16,6 @@ public class ProfileActivity extends AppCompatActivity {
         // Find views
         TextView profileName = findViewById(R.id.profile_name);
         TextView profileUsername = findViewById(R.id.profile_username);
-        ImageButton backButton = findViewById(R.id.backButton);
         ImageButton homeButton = findViewById(R.id.home);
         ImageButton accountButton = findViewById(R.id.account);
         ImageButton statsButton = findViewById(R.id.stats);
@@ -24,9 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Set user details (Replace with actual data)
         profileName.setText("John Doe");
         profileUsername.setText("@johndoe");
-
-        // Button Click Listeners
-        backButton.setOnClickListener(view -> finish()); // Go back to the previous screen
+        
 
         homeButton.setOnClickListener(view ->
                 startActivity(new Intent(ProfileActivity.this, HomeActivity.class))
