@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SelectionPage"/>
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".AppPopup"/>
         <activity android:name=".StreaksPage"/>
         <activity android:name=".Login"/>

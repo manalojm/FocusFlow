@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,7 +24,11 @@ public class ProfileActivity extends AppCompatActivity {
         // Set user details (Replace with actual data)
         profileName.setText("John Doe");
         profileUsername.setText("@johndoe");
-        
+
+        accountButton.setOnClickListener(view -> {
+            // Optional: Show a toast instead of reopening the same activity
+            Toast.makeText(ProfileActivity.this, "You're already on the profile page!", Toast.LENGTH_SHORT).show();
+        });
 
         homeButton.setOnClickListener(view ->
                 startActivity(new Intent(ProfileActivity.this, HomeActivity.class))
