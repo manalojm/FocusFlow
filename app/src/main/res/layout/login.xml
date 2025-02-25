@@ -45,7 +45,10 @@
         android:textSize="20dp"
         android:background="@drawable/diag_box"
         android:padding="5dp"
-        android:layout_marginLeft="70dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="70dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:clickable="true"
@@ -69,6 +72,10 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:clickable="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="70dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         >
     </EditText>
 
@@ -85,7 +92,7 @@
 
     <TextView
         android:id="@+id/registerNow"
-        android:text="@+string/create_an_account"
+        android:text="create an account"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:gravity="center"
@@ -94,15 +101,4 @@
         android:clickable="true"
         android:focusable="true"/>
 
-    <!--    <EditText-->
-    <!--        android:id="@+id/create_acc"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:gravity="center"-->
-    <!--        android:hint="Create an account."-->
-    <!--        android:inputType="text"-->
-    <!--        android:layout_marginTop="400dp"-->
-    <!--        android:textColorHint="@color/white"-->
-    <!--        android:textSize="15dp">-->
-    <!--    </EditText>-->
 </RelativeLayout>

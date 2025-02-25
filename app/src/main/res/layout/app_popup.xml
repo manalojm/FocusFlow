@@ -5,13 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context=".AppPopup">
 
     <View
         android:id="@+id/menuHead"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="60dp"
         android:background="@drawable/menu"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,10 +18,12 @@
 
     <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="80dp"
-        android:layout_height="100dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:clickable="true"
         android:contentDescription="return"
+        android:layout_marginTop="9dp"
+        android:layout_marginStart="7dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:focusable="true"
         android:scaleType="centerInside"
@@ -44,9 +45,9 @@
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/totalapp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/totalapp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

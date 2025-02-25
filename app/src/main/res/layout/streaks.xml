@@ -7,8 +7,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <View
         android:id="@+id/menuBackground"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
         android:background="@drawable/menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -123,40 +123,48 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/home"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="164dp"
-        android:contentDescription="@string/home"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:scaleType="centerInside"
-        android:src="@drawable/home"
-        app:layout_constraintBottom_toBottomOf="@id/menuBackground"
-        app:layout_constraintStart_toStartOf="@id/menuBackground"
-        app:layout_constraintTop_toTopOf="@id/menuBackground"
-        />
-    <ImageButton
         android:id="@+id/account"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginEnd="32dp"
-        android:contentDescription="@string/account"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="Account"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="centerInside"
         android:src="@drawable/account_circle"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@id/menuBackground"
         app:layout_constraintEnd_toEndOf="@id/menuBackground"
         app:layout_constraintTop_toTopOf="@id/menuBackground"
         />
+
+    <ImageButton
+        android:id="@+id/home"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="Home"
+        android:focusable="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/home"
+        app:layout_constraintBottom_toBottomOf="@id/menuBackground"
+        app:layout_constraintTop_toTopOf="@id/menuBackground"
+        app:layout_constraintStart_toEndOf="@id/stats"
+        app:layout_constraintEnd_toStartOf="@id/account"
+        />
+
     <ImageButton
         android:id="@+id/stats"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginStart="32dp"
-        android:contentDescription="@string/status"
+        android:layout_marginStart="20dp"
+        android:contentDescription="Status"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="centerInside"
         android:src="@drawable/stats"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@id/menuBackground"
         app:layout_constraintStart_toStartOf="@id/menuBackground"
         app:layout_constraintTop_toTopOf="@id/menuBackground"
