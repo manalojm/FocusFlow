@@ -8,7 +8,7 @@
     <View
         android:id="@+id/menuHead"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="100dp"
         android:background="@drawable/menu"
         android:layout_centerInParent="true"
         app:layout_constraintTop_toTopOf="parent"
@@ -144,6 +144,7 @@
         android:layout_marginEnd="40dp"
         android:focusable="true"
         android:clickable="true"
+        android:focusableInTouchMode="true"
         >
     </View>
 
@@ -151,11 +152,11 @@
         android:id="@+id/restrict_btn"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="#24CDA0"
         android:text="Restrict"
-        android:textColor="#023020"
+        android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/appbox"
         app:layout_constraintStart_toStartOf="parent"
         />
@@ -197,11 +198,11 @@
         app:layout_constraintEnd_toEndOf="@id/menuBackground"
         app:layout_constraintTop_toTopOf="@id/menuBackground"
         />
-
     <ImageButton
         android:id="@+id/home"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_marginEnd="32dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:contentDescription="Home"
@@ -209,11 +210,11 @@
         android:scaleType="centerInside"
         android:src="@drawable/home"
         app:layout_constraintBottom_toBottomOf="@id/menuBackground"
+        app:layout_constraintEnd_toEndOf="@id/menuBackground"
         app:layout_constraintTop_toTopOf="@id/menuBackground"
         app:layout_constraintStart_toEndOf="@id/stats"
         app:layout_constraintEnd_toStartOf="@id/account"
         />
-
     <ImageButton
         android:id="@+id/stats"
         android:layout_width="80dp"

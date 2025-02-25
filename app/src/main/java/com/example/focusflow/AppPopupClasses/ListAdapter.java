@@ -21,21 +21,6 @@ public class ListAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return appList.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return appList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
@@ -48,6 +33,25 @@ public class ListAdapter extends BaseAdapter {
         iconView.setImageDrawable(app.getIcon());
         nameView.setText(app.getName());
 
+        convertView.setOnClickListener(v -> {
+
+        });
         return convertView;
+    }
+
+
+    @Override
+    public int getCount() {
+        return appList.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return appList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }

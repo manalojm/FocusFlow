@@ -1,12 +1,10 @@
 package com.example.focusflow;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SelectionPage extends AppCompatActivity {
@@ -21,7 +19,10 @@ public class SelectionPage extends AppCompatActivity {
         ImageButton btnHomePage = findViewById(R.id.home);
         ImageButton btnAccPage = findViewById(R.id.account);
         ImageButton btnStreaksPage = findViewById(R.id.stats);
+        Button setTimeButton = findViewById(R.id.btnSetTime);
+        setTimeButton.setOnClickListener(v->{
 
+        });
         viewApps.requestFocus();
 
         //Navigation

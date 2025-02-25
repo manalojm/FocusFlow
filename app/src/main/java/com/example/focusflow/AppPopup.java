@@ -41,15 +41,12 @@ public class AppPopup extends AppCompatActivity {
         }
     }
 
-
-
     public void getallapps() throws PackageManager.NameNotFoundException {
         List<PackageInfo> packList = getPackageManager().getInstalledPackages(0);
         List<AppInfo> appInfoList = new ArrayList<>();
 
         for (PackageInfo info : packList) {
             if ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) { //Check if valid application
-                System.out.println(info.packageName); //Testing
                 String appName = info.applicationInfo.loadLabel(getPackageManager()).toString();
                 Drawable appIcon = getPackageManager().getApplicationIcon(info.packageName);
                 appInfoList.add(new AppInfo(appName, appIcon));
