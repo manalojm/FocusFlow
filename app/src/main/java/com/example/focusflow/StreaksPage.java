@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,14 +13,17 @@ public class StreaksPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.streaks);
+        //Buttons
+        ImageButton btnAccPage = findViewById(R.id.account);
+        ImageButton btnStatsPage = findViewById(R.id.stats);
         ImageButton btnHomePage = findViewById(R.id.home);
-        btnHomePage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(StreaksPage.this, Dashboard.class);
-                startActivity(intent);
-                finish();
-            }
+
+        //Navigation
+        btnStatsPage.setOnClickListener(view -> {
+            // Optional: Show a toast instead of reopening the same activity
+            Toast.makeText(StreaksPage.this, "You're already on the Streaks Page!", Toast.LENGTH_SHORT).show();
         });
+        NavigationUtility.setNavigation(this,btnAccPage,ProfileActivity.class);
+        NavigationUtility.setNavigation(this,btnHomePage, Dashboard.class);
     }
 }

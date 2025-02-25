@@ -18,7 +18,8 @@ public class SelectionPage extends AppCompatActivity {
 
         //Buttons
         View viewApps = findViewById(R.id.appbox);
-        ImageButton btnHomePage = findViewById(R.id.account);
+        ImageButton btnHomePage = findViewById(R.id.home);
+        ImageButton btnAccPage = findViewById(R.id.account);
         ImageButton btnStreaksPage = findViewById(R.id.stats);
 
         viewApps.requestFocus();
@@ -27,6 +28,7 @@ public class SelectionPage extends AppCompatActivity {
         NavigationUtility.setNavigation(this,viewApps,AppPopup.class);
         NavigationUtility.setNavigation(this, btnHomePage, Dashboard.class);
         NavigationUtility.setNavigation(this, btnStreaksPage, StreaksPage.class);
+        NavigationUtility.setNavigation(this, btnAccPage, ProfileActivity.class);
 
 
     }

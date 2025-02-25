@@ -11,9 +11,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/focusflow_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/focusflow_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.FocusFlow"
         tools:targetApi="31">
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SelectionPage"/>
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ProfileActivity"/>
         <activity android:name=".AppPopup"/>
         <activity android:name=".StreaksPage"/>
         <activity android:name=".Login"/>

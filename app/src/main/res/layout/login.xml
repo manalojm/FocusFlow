@@ -16,22 +16,23 @@
         android:layout_centerInParent="true">
     </View>
 
-    <EditText
+    <TextView
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/username"
+        android:layout_marginBottom="-1dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:gravity="center"
         android:hint="Login"
         android:inputType="text"
-        android:textColorHint="@color/black"
+        android:paddingBottom="30dp"
+        android:textColorHint="#023020"
         android:textSize="40dp"
-        android:paddingBottom="60dp"
-        android:paddingTop="250dp"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:clickable="false">
-    </EditText>
+        android:textStyle="italic">
+    </TextView>
 
     <EditText
         android:id="@+id/username"
@@ -83,12 +84,14 @@
         android:id="@+id/login_btn"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="125dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginEnd="120dp"
         android:layout_below="@id/password"
         android:layout_marginTop="15dp"
-        android:backgroundTint="#b3b3b3"
+        android:backgroundTint="#023020"
+        android:textStyle="italic"
         android:text="Login"
-        android:textColor="@color/black" />
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/registerNow"
@@ -96,9 +99,17 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:layout_below="@+id/login_btn"
         android:clickable="true"
         android:focusable="true"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        app:layout_constraintBottom_toTopOf="@id/login"
+        app:srcCompat="@drawable/focusflow" />
 
 </RelativeLayout>
