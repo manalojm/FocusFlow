@@ -11,11 +11,25 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class ProfileActivity extends AppCompatActivity {
+    FirebaseAuth auth;
+    FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
+
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
+        if (user == null){
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+            startActivity(intent);
+            finish();
+        }
 
         // Find views
         TextView profileName = findViewById(R.id.profile_name);
@@ -38,6 +52,11 @@ public class ProfileActivity extends AppCompatActivity {
                     .setPositiveButton("Log out", (dialog, which) -> {
                         dialog.dismiss();
                         //add logout here
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent = new Intent(getApplicationContext(), Login.class);
+                        startActivity(intent);
+                        finish();
+
                     })
                     .setNegativeButton("Keep me Logged In", (dialog, which) -> {
                         finish();
