@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     android:orientation="horizontal">
 
@@ -14,10 +16,21 @@
 
     <TextView
         android:id="@+id/appName"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="100dp"
+        android:layout_height="78dp"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:trackTint="@color/custom_track_color"
+        android:gravity="center_vertical"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
 </LinearLayout>

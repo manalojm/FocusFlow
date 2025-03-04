@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -31,9 +32,20 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Navigation
         btnAccPage.setOnClickListener(view -> {
-            // Optional: Show a toast instead of reopening the same activity
-            Toast.makeText(ProfileActivity.this, "You're already on the profile page!", Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+            builder.setTitle("Notice")
+                    .setMessage("Are you sure you want to log out?")
+                    .setPositiveButton("Log out", (dialog, which) -> {
+                        dialog.dismiss();
+                        //add logout here
+                    })
+                    .setNegativeButton("Keep me Logged In", (dialog, which) -> {
+                        finish();
+                    })
+                        .show();
+
         });
+
         NavigationUtility.setNavigation(this,btnStatsPage,StreaksPage.class);
         NavigationUtility.setNavigation(this,btnHomePage, Dashboard.class);
     }
