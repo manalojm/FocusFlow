@@ -8,8 +8,12 @@ import android.util.Log;
 
 import com.example.focusflow.Dashboard;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AccessibilityService extends android.accessibilityservice.AccessibilityService {
-    private String blockedApp = "com.strava";
+    private static List<String> blockedApps = new ArrayList<>();
+
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
@@ -24,7 +28,7 @@ public class AccessibilityService extends android.accessibilityservice.Accessibi
 
         Log.d("AccessibilityService", "Detected app: " + packageName);
 
-        if (packageName.equals(blockedApp)) {
+        if (checkAppList(packageName)) {
             Log.d("AccessibilityService", "🚨 Blocking app: " + packageName);
             startService(new Intent(this, OverlayService.class));
         }
@@ -58,5 +62,20 @@ public class AccessibilityService extends android.accessibilityservice.Accessibi
         super.onDestroy();
         Log.d("AccessibilityService", "⚠️ Service is being destroyed. Cleaning up...");
         stopService(new Intent(this, OverlayService.class));
+    }
+
+    public static void addApp(String app){
+        blockedApps.add(app);
+    }
+    public static void removeApp(String app){
+        blockedApps.remove(app);
+    }
+    public static boolean checkAppList(String app) {
+        for (String string : blockedApps) {
+            if(app.equals(string)){
+                return true;
+            }
+        }
+        return false;
     }
 }
