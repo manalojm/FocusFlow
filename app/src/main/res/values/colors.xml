@@ -3,4 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="custom_track_color">#24cda0</color>
+    <color name="custom_track_color_off">#023020</color>
+    <color name="GoGreen">#24cda0</color>
+    <color name="StopRed">#ff4c3b</color>
+    <color name="switchthumb">#D9D9D9</color>
 </resources>

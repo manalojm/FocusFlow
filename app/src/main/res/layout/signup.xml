@@ -145,8 +145,8 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:gravity="center"
-            android:layout_marginTop="100dp"
-            android:text="already have an account login"
+            android:layout_marginTop="120dp"
+            android:text="already_have_an_account_login"
             android:layout_above="@+id/signup_btn"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -154,14 +154,6 @@
             app:layout_constraintTop_toBottomOf="@id/confirm_password"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/signup"
-            app:srcCompat="@drawable/focusflow"
-            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -85,7 +85,6 @@
 
     </LinearLayout>
 
-
     <View
         android:id="@+id/menuBackground"
         android:layout_width="0dp"
@@ -110,7 +109,6 @@
         app:layout_constraintEnd_toEndOf="@id/menuBackground"
         app:layout_constraintTop_toTopOf="@id/menuBackground"
         />
-
     <ImageButton
         android:id="@+id/home"
         android:layout_width="80dp"
@@ -126,7 +124,6 @@
         app:layout_constraintStart_toEndOf="@id/stats"
         app:layout_constraintEnd_toStartOf="@id/account"
         />
-
     <ImageButton
         android:id="@+id/stats"
         android:layout_width="80dp"

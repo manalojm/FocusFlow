@@ -9,5 +9,6 @@
     <string name="achievements">Achievements</string>
     <string name="streaks_calendar">Streaks Calendar</string>
     <string name="sign_up">Sign up</string>
+    <string name="accessibility_service_description">For detecting applications</string>
 
 </resources>

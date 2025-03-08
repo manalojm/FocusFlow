@@ -16,23 +16,22 @@
         android:layout_centerInParent="true">
     </View>
 
-    <TextView
+    <EditText
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/username"
-        android:layout_marginBottom="-1dp"
-        android:clickable="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
         android:gravity="center"
         android:hint="Login"
         android:inputType="text"
-        android:paddingBottom="30dp"
-        android:textColorHint="#023020"
+        android:textColorHint="@color/black"
         android:textSize="40dp"
-        android:textStyle="italic">
-    </TextView>
+        android:paddingBottom="60dp"
+        android:paddingTop="250dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false">
+    </EditText>
 
     <EditText
         android:id="@+id/username"

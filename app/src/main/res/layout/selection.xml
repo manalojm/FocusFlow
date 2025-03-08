@@ -8,7 +8,7 @@
     <View
         android:id="@+id/menuHead"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="100dp"
         android:background="@drawable/menu"
         android:layout_centerInParent="true"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,7 +36,7 @@
     <View
         android:id="@+id/timebox"
         android:layout_width="330dp"
-        android:layout_height="230dp"
+        android:layout_height="200dp"
         android:background="@drawable/box"
         android:layout_below="@id/menuHead"
         android:layout_marginTop="20dp"
@@ -103,14 +103,6 @@
                 android:textSize="50dp" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnSetTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#023020"
-            android:textColor="#FFFFFF"
-            android:text="Time Set"
-            android:textStyle="italic" />
     </LinearLayout>
 
     <TextView
@@ -144,34 +136,23 @@
         android:layout_marginEnd="40dp"
         android:focusable="true"
         android:clickable="true"
+        android:focusableInTouchMode="true"
         >
     </View>
 
     <Button
         android:id="@+id/restrict_btn"
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:layout_height="50dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="150dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="#24CDA0"
         android:text="Restrict"
-        android:textColor="#023020"
+        android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/appbox"
         app:layout_constraintStart_toStartOf="parent"
         />
 
-    <Button
-        android:id="@+id/cancel_btn"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="#24CDA0"
-        android:text="Cancel"
-        android:textColor="#023020"
-        app:layout_constraintTop_toBottomOf="@id/appbox"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
 
     <View
         android:id="@+id/menuBackground"
@@ -209,10 +190,10 @@
         android:scaleType="centerInside"
         android:src="@drawable/home"
         app:layout_constraintBottom_toBottomOf="@id/menuBackground"
-        app:layout_constraintTop_toTopOf="@id/menuBackground"
-        app:layout_constraintStart_toEndOf="@id/stats"
         app:layout_constraintEnd_toStartOf="@id/account"
-        />
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toEndOf="@id/stats"
+        app:layout_constraintTop_toTopOf="@id/menuBackground" />
 
     <ImageButton
         android:id="@+id/stats"

@@ -1,21 +1,17 @@
 package com.example.focusflow.AppPopupClasses;
 
+import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 
 public class AppInfo {
-    private String appName;
-    private Drawable icon;
+    PackageInfo packageInfo;
 
-    public AppInfo(String appName,Drawable icon){
-        this.appName=appName;
-        this.icon=icon;
-    }
-    public String getName(){
-        return appName;
+    public AppInfo(PackageInfo packageInfo){
+        this.packageInfo=packageInfo;
     }
 
-    public Drawable getIcon(){
-        return icon;
+    public PackageInfo getPackageInfo(){
+        return packageInfo;
     }
 
 }

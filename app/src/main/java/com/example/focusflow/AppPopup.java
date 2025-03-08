@@ -11,8 +11,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.focusflow.AppPopupClasses.AppInfo;
 import com.example.focusflow.AppPopupClasses.ListAdapter;
@@ -34,6 +38,7 @@ public class AppPopup extends AppCompatActivity {
         ImageButton btnBack = findViewById(R.id.backButton);
         NavigationUtility.setNavigation(this,btnBack,SelectionPage.class);
 
+
         try {
             getallapps();
         } catch (PackageManager.NameNotFoundException e) {
@@ -41,24 +46,22 @@ public class AppPopup extends AppCompatActivity {
         }
     }
 
-
-
     public void getallapps() throws PackageManager.NameNotFoundException {
         List<PackageInfo> packList = getPackageManager().getInstalledPackages(0);
         List<AppInfo> appInfoList = new ArrayList<>();
 
         for (PackageInfo info : packList) {
             if ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) { //Check if valid application
-                System.out.println(info.packageName); //Testing
                 String appName = info.applicationInfo.loadLabel(getPackageManager()).toString();
                 Drawable appIcon = getPackageManager().getApplicationIcon(info.packageName);
-                appInfoList.add(new AppInfo(appName, appIcon));
+                appInfoList.add(new AppInfo(info));
             }
         }
 
         listView.setAdapter(new ListAdapter(this, appInfoList));
         text.setText(appInfoList.size() + " Apps are installed");
     }
+
 }
 
 
