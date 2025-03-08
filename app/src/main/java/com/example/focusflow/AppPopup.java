@@ -54,7 +54,7 @@ public class AppPopup extends AppCompatActivity {
             if ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) { //Check if valid application
                 String appName = info.applicationInfo.loadLabel(getPackageManager()).toString();
                 Drawable appIcon = getPackageManager().getApplicationIcon(info.packageName);
-                appInfoList.add(new AppInfo(appName, appIcon));
+                appInfoList.add(new AppInfo(info));
             }
         }
 

@@ -31,6 +31,9 @@
         android:scaleY="1.5"
         android:trackTint="@color/custom_track_color"
         android:gravity="center_vertical"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        tools:ignore="UseSwitchCompatOrMaterialXml"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"/>
 
 </LinearLayout>
