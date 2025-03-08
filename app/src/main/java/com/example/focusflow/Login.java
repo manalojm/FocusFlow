@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
 
-    EditText editTextEmail, editTextPassword;
+    EditText editTextUsername, editTextPassword;
     Button buttonLogin;
     FirebaseAuth mAuth;
     TextView textView;
@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.login);
         mAuth = FirebaseAuth.getInstance();
 
-        editTextEmail = findViewById(R.id.username);
+        editTextUsername = findViewById(R.id.username);
         editTextPassword = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.login_btn);
         textView = findViewById(R.id.registerNow);
@@ -64,12 +64,12 @@ public class Login extends AppCompatActivity {
         });
 
         buttonLogin.setOnClickListener(v -> {
-            String email = editTextEmail.getText().toString().trim();
+            String username = editTextUsername.getText().toString().trim();
             String password = editTextPassword.getText().toString().trim();
 
             // Prevent login with empty fields
-            if (TextUtils.isEmpty(email)) {
-                Toast.makeText(Login.this, "Enter email", Toast.LENGTH_SHORT).show();
+            if (TextUtils.isEmpty(username)) {
+                Toast.makeText(Login.this, "Enter username", Toast.LENGTH_SHORT).show();
                 return;
             }
             if (TextUtils.isEmpty(password)) {
@@ -78,7 +78,7 @@ public class Login extends AppCompatActivity {
             }
 
             // Firebase authentication
-            mAuth.signInWithEmailAndPassword(email, password)
+            mAuth.signInWithEmailAndPassword(username, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             Toast.makeText(Login.this, "Login Successful.", Toast.LENGTH_SHORT).show();
