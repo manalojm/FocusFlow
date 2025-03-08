@@ -5,4 +5,5 @@
     <color name="custom_track_color">#24cda0</color>
     <color name="GoGreen">#24cda0</color>
     <color name="StopRed">#ff4c3b</color>
+    <color name="switchcolor">#82e0aa</color>
 </resources>

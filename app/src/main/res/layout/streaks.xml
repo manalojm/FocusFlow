@@ -96,6 +96,137 @@
             android:rowCount="5" />
     </LinearLayout>
 
+<!--    <?xml version="1.0" encoding="utf-8"?>-->
+<!--    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        android:id="@+id/streak_week"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        android:background="#222222"-->
+<!--        android:padding="8dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/calendar">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:gravity="center">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/saturdy"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="sat"-->
+<!--                android:textColor="#B3B3B3"-->
+<!--                android:textStyle="italic"-->
+<!--                android:padding="8dp"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/monday"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="mon"-->
+<!--                android:textColor="#B3B3B3"-->
+<!--                android:textStyle="italic"-->
+<!--                android:padding="8dp"-->
+<!--                app:layout_ContraintStart_toEndof"@"-->
+<!--                app/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tuesday"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="tue"-->
+<!--                android:textColor="#B3B3B3"-->
+<!--                android:textStyle="italic"-->
+<!--                android:padding="8dp"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/wednesday"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="wed"-->
+<!--                android:textColor="#D9D9D9"-->
+<!--                android:textStyle="italic"-->
+<!--                android:padding="8dp"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/thursday"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="thu"-->
+<!--                android:textColor="#B3B3B3"-->
+<!--                android:textStyle="italic"-->
+<!--                android:padding="8dp"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/friday"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="fri"-->
+<!--                android:textColor="#B3B3B3"-->
+<!--                android:textStyle="italic"-->
+<!--                android:padding="8dp"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/sunday"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="sun"-->
+<!--                android:textColor="#B3B3B3"-->
+<!--                android:textStyle="italic"-->
+<!--                android:padding="8dp"/>-->
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:gravity="center">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:src="@drawable/check"-->
+<!--                android:padding="4dp"/>-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:src="@drawable/check"-->
+<!--                android:padding="4dp"/>-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:src="@drawable/check"-->
+<!--                android:padding="4dp"/>-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:src="@drawable/check"-->
+<!--                android:padding="4dp"/>-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:src="@drawable/check"-->
+<!--                android:padding="4dp"/>-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:padding="4dp"/>-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:padding="4dp"/>-->
+<!--        </LinearLayout>-->
+
+<!--    </LinearLayout>-->
+
     <View
         android:id="@+id/achievemntsbanner"
         android:layout_width="match_parent"
@@ -104,7 +235,6 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        app:layout_constraintTop_toBottomOf="@id/calendar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
     </View>
@@ -118,9 +248,10 @@
         android:textColor="#000000"
         android:textSize="20sp"
         android:text="@string/achievements"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/calendar"
-        />
+        app:layout_constraintStart_toStartOf="parent">
+
+    </TextView>
+<!--        app:layout_constraintTop_toBottomOf="@id/streak_week"-->
 
     <LinearLayout
         android:id="@+id/boxes_layout"

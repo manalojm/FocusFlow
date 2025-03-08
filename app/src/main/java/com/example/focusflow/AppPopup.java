@@ -11,8 +11,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.focusflow.AppPopupClasses.AppInfo;
 import com.example.focusflow.AppPopupClasses.ListAdapter;
@@ -33,6 +37,7 @@ public class AppPopup extends AppCompatActivity {
 
         ImageButton btnBack = findViewById(R.id.backButton);
         NavigationUtility.setNavigation(this,btnBack,SelectionPage.class);
+
 
         try {
             getallapps();
@@ -56,6 +61,7 @@ public class AppPopup extends AppCompatActivity {
         listView.setAdapter(new ListAdapter(this, appInfoList));
         text.setText(appInfoList.size() + " Apps are installed");
     }
+
 }
 
 
