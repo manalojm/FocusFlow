@@ -46,9 +46,9 @@ public class SignUpPage extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.signup);
         mAuth = FirebaseAuth.getInstance();
-        editTextEmail = findViewById(R.id.username);
+        editTextUsername = findViewById(R.id.username);
         editTextPassword = findViewById(R.id.password);
-        editTextUsername = findViewById(R.id.email);
+        editTextEmail = findViewById(R.id.email);
         editTextConfirmPassword = findViewById(R.id.confirm_password);
         buttonReg = findViewById(R.id.signup_btn);
         textView = findViewById(R.id.loginNow);

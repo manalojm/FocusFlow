@@ -15,14 +15,14 @@
         android:theme="@style/Theme.FocusFlow"
         tools:targetApi="31">
         <activity
-            android:name=".Dashboard"
+            android:name=".Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login"/>
+        <activity android:name=".Dashboard"/>
         <activity android:name=".AppPopup"/>
         <activity android:name=".StreaksPage"/>
         <activity android:name=".SelectionPage"/>
