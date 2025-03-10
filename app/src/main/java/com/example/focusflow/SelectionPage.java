@@ -19,10 +19,7 @@ public class SelectionPage extends AppCompatActivity {
         ImageButton btnHomePage = findViewById(R.id.home);
         ImageButton btnAccPage = findViewById(R.id.account);
         ImageButton btnStreaksPage = findViewById(R.id.stats);
-        Button setTimeButton = findViewById(R.id.btnSetTime);
-        setTimeButton.setOnClickListener(v->{
 
-        });
         viewApps.requestFocus();
 
         //Navigation

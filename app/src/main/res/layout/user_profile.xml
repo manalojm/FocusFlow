@@ -15,18 +15,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
     </View>
-    <!--    <ImageView-->
-    <!--        android:id="@+id/profile_image"-->
-    <!--        android:layout_width="150dp"-->
-    <!--        android:layout_height="150dp"-->
-    <!--        android:layout_marginTop="200dp"-->
-    <!--        android:scaleType="centerCrop"-->
-    <!--        android:src="@drawable/"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profilePic"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="150dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/account_circle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="3dp"
+        app:strokeColor="@color/black"
+        app:shapeAppearanceOverlay="@style/CircleImageView"/>
+"/>
+
     <TextView
-        android:id="@+id/profile_name"
+        android:id="@+id/profile_Username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
@@ -36,17 +41,17 @@
         android:textSize="48sp"
         android:textStyle="italic"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/profilePic" />
 
     <TextView
-        android:id="@+id/profile_username"
+        android:id="@+id/profile_Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="username"
+        android:text="email"
         android:textColor="#D9D9D9"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +67,7 @@
         android:weightSum="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_username">
+        app:layout_constraintTop_toBottomOf="@+id/profile_Email">
     </LinearLayout>
     <View
         android:id="@+id/menuBackground"
@@ -100,9 +105,10 @@
         android:scaleType="centerInside"
         android:src="@drawable/home"
         app:layout_constraintBottom_toBottomOf="@id/menuBackground"
-        app:layout_constraintTop_toTopOf="@id/menuBackground"
-        app:layout_constraintStart_toEndOf="@id/stats"
         app:layout_constraintEnd_toStartOf="@id/account"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toEndOf="@id/stats"
+        app:layout_constraintTop_toTopOf="@id/menuBackground"
         />
 
     <ImageButton

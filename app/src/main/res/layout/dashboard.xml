@@ -120,9 +120,10 @@
         android:scaleType="centerInside"
         android:src="@drawable/home"
         app:layout_constraintBottom_toBottomOf="@id/menuBackground"
-        app:layout_constraintTop_toTopOf="@id/menuBackground"
-        app:layout_constraintStart_toEndOf="@id/stats"
         app:layout_constraintEnd_toStartOf="@id/account"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toEndOf="@id/stats"
+        app:layout_constraintTop_toTopOf="@id/menuBackground"
         />
     <ImageButton
         android:id="@+id/stats"
