@@ -73,19 +73,19 @@ public class ProfileActivity extends AppCompatActivity {
                     });
         });
 
-        // Find views
+        // display name and email of user
         TextView profileUsername = findViewById(R.id.profile_Username);
         TextView profileEmail = findViewById(R.id.profile_Email);
 
         // Load user details from Firestore
         loadUserDetails(profileUsername, profileEmail);
 
-        // Buttons
+
         ImageButton btnAccPage = findViewById(R.id.account);
         ImageButton btnStatsPage = findViewById(R.id.stats);
         ImageButton btnHomePage = findViewById(R.id.home);
 
-        // Navigation
+
         btnAccPage.setOnClickListener(view -> {
             new AlertDialog.Builder(ProfileActivity.this)
                     .setTitle("Notice")
@@ -105,7 +105,7 @@ public class ProfileActivity extends AppCompatActivity {
         NavigationUtility.setNavigation(this, btnHomePage, Dashboard.class);
     }
 
-    // ✅ Moved loadUserDetails() outside onCreate()
+    //debugging purposes :P
     private void loadUserDetails(TextView profileName, TextView profileUsername) {
         if (user == null) return;
 
