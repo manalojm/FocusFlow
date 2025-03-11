@@ -63,7 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
                             selectedImageUri = data.getData();
                             Glide.with(this).load(selectedImageUri).into(profilePic);
 
-                            profilePic.setTag("updated!");
+                            profilePic.setTag(result);
                         }
                     }
                 });
