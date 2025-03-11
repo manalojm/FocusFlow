@@ -46,6 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
         username = mAuth.getCurrentUser();
         fStore = FirebaseFirestore.getInstance(); // Initialize Firestore
 
+
         if (username == null) {
             Intent intent = new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
@@ -61,6 +62,8 @@ public class ProfileActivity extends AppCompatActivity {
                         if (data != null && data.getData() != null) {
                             selectedImageUri = data.getData();
                             Glide.with(this).load(selectedImageUri).into(profilePic);
+
+                            profilePic.setTag("updated!");
                         }
                     }
                 });
@@ -82,8 +85,8 @@ public class ProfileActivity extends AppCompatActivity {
         Uid = mAuth.getCurrentUser().getUid();
         DocumentReference documentReference = fStore.collection("profile pic").document(Uid);
         Map<String, Object> user = new HashMap<>();
-        user.put("username", username);
-        user.put("pfp", profilePic);
+        user.put("username", username.getDisplayName());
+        user.put("pfp", profilePic.getTag());
         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
 
             public static final String TAG = "TAG";
