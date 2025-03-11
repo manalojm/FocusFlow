@@ -2,21 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background"
     android:gravity="center"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This app is blocked!"
-        android:textColor="@android:color/white"
+        android:text="give up"
+        android:textColor="@color/custom_track_color"
         android:textSize="24sp"
-        android:textStyle="bold"/>
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:textStyle="italic"/>
 
     <Button
         android:id="@+id/dismiss"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="dismiss" />
+        android:backgroundTint="@color/custom_track_color"
+        android:text="bye"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </LinearLayout>
