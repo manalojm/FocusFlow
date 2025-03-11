@@ -3,6 +3,7 @@ package com.example.focusflow;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,17 +18,25 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpPage extends AppCompatActivity {
 
     EditText editTextEmail, editTextPassword, editTextUsername, editTextConfirmPassword;
     Button buttonReg;
     FirebaseAuth mAuth;
+    FirebaseFirestore fStore;
     TextView textView;
+    String Uid;
 
     @Override
     public void onStart() {
@@ -46,6 +55,7 @@ public class SignUpPage extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.signup);
         mAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
         editTextUsername = findViewById(R.id.username);
         editTextPassword = findViewById(R.id.password);
         editTextEmail = findViewById(R.id.email);
@@ -88,13 +98,27 @@ public class SignUpPage extends AppCompatActivity {
                     return;
                 }
 
-                mAuth.createUserWithEmailAndPassword(username, password)
+                mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(SignUpPage.this, "Account Created.",
                                             Toast.LENGTH_SHORT).show();
+                                    Uid = mAuth.getCurrentUser().getUid();
+                                    DocumentReference documentReference = fStore.collection("users").document(Uid);
+                                    Map<String, Object> user = new HashMap<>();
+                                    user.put("username", username);
+                                    user.put("email", email);
+                                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                                        public static final String TAG = "TAG";
+
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Log.d(TAG, "User Profile created for "+ Uid);
+                                        }
+                                    });
                                     Intent intent = new Intent(getApplicationContext(), Login.class);
                                     startActivity(intent);
                                     finish();
