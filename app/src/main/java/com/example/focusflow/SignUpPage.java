@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class SignUpPage extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore fStore;
     TextView textView;
+    ImageView profilePic;
     String Uid;
 
     @Override
@@ -60,6 +62,7 @@ public class SignUpPage extends AppCompatActivity {
         editTextPassword = findViewById(R.id.password);
         editTextEmail = findViewById(R.id.email);
         editTextConfirmPassword = findViewById(R.id.confirm_password);
+        profilePic = findViewById(R.id.profilePic);
         buttonReg = findViewById(R.id.signup_btn);
         textView = findViewById(R.id.loginNow);
         textView.setOnClickListener(new View.OnClickListener() {
