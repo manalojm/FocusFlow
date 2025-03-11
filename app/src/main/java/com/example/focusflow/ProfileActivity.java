@@ -37,6 +37,24 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseFirestore fStore; // Add this
     private String Uid;
 
+    private void savePFPtoFirestore(String imageUrl) {
+        if (Uid == null) return;
+        Uid = mAuth.getCurrentUser().getUid();
+        DocumentReference documentReference = fStore.collection("profile pic").document(Uid);
+        Map<String, Object> user = new HashMap<>();
+        user.put("username", username.getDisplayName());
+        user.put("pfp", profilePic.getTag());
+        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+            public static final String TAG = "TAG";
+
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d(TAG, "Profile Picture set for "+ Uid);
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +81,9 @@ public class ProfileActivity extends AppCompatActivity {
                             selectedImageUri = data.getData();
                             Glide.with(this).load(selectedImageUri).into(profilePic);
 
-                            profilePic.setTag(selectedImageUri);
+                            profilePic.setTag(selectedImageUri.toString());
+
+                            savePFPtoFirestore(selectedImageUri.toString());
                         }
                     }
                 });
@@ -80,21 +100,6 @@ public class ProfileActivity extends AppCompatActivity {
                             return null;
                         }
                     });
-        });
-
-        Uid = mAuth.getCurrentUser().getUid();
-        DocumentReference documentReference = fStore.collection("profile pic").document(Uid);
-        Map<String, Object> user = new HashMap<>();
-        user.put("username", username.getDisplayName());
-        user.put("pfp", profilePic.getTag());
-        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-
-            public static final String TAG = "TAG";
-
-            @Override
-            public void onSuccess(Void unused) {
-                Log.d(TAG, "Profile Picture set for "+ Uid);
-            }
         });
 
         // display name and email of user
