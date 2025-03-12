@@ -121,7 +121,7 @@ public class ProfileActivity extends AppCompatActivity {
                     .setMessage("Are you sure you want to log out?")
                     .setPositiveButton("Log out", (dialog, which) -> {
                         dialog.dismiss();
-                        FirebaseAuth.getInstance().signOut();
+                        FirebaseAuth.getInstance().signOut();   
                         Intent intent = new Intent(getApplicationContext(), Login.class);
                         startActivity(intent);
                         finish();

@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="give up"
+        android:text="failure is a stepping stone to success"
         android:textColor="@color/custom_track_color"
         android:textSize="24sp"
         android:focusable="false"
@@ -23,7 +23,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/custom_track_color"
-        android:text="bye"
+        android:text="EXIT"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
