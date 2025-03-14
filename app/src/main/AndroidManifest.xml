@@ -29,6 +29,7 @@
         <activity android:name=".SelectionPage"/>
         <activity android:name=".SignUpPage"/>
         <activity android:name=".ProfileActivity"/>
+        <activity android:name=".SettingsRedirect"/>
 
         <service
             android:name=".AppPopupClasses.AccessibilityService"
