@@ -82,7 +82,7 @@ public class Login extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             Toast.makeText(Login.this, "Login Successful.", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(Login.this, Dashboard.class); // Redirect to Dashboard
+                            Intent intent = new Intent(Login.this, SettingsRedirect.class); // Redirect to Settings Request
                             startActivity(intent);
                             finish();
                         } else {
