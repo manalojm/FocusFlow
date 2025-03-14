@@ -50,7 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(Void unused) {
-                Log.d(TAG, "Profile Picture set for "+ Uid);
+                Log.d(TAG, "Profile Picture set for " + Uid);
             }
         });
     }
@@ -121,7 +121,7 @@ public class ProfileActivity extends AppCompatActivity {
                     .setMessage("Are you sure you want to log out?")
                     .setPositiveButton("Log out", (dialog, which) -> {
                         dialog.dismiss();
-                        FirebaseAuth.getInstance().signOut();   
+                        FirebaseAuth.getInstance().signOut();
                         Intent intent = new Intent(getApplicationContext(), Login.class);
                         startActivity(intent);
                         finish();
@@ -135,23 +135,30 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     //debugging purposes :P
-    private void loadUserDetails(TextView profileName, TextView profileUsername) {
-        if (username == null) return;
+    private void loadUserDetails(TextView profileUsername, TextView profileEmail) {
+        if (profileEmail == null) return;
 
-        DocumentReference userDoc = fStore.collection("users").document(username.getUid());
-        userDoc.get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        // Fetch name and username
-                        String name = documentSnapshot.getString("name");
-                        String username = documentSnapshot.getString("username");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String userId = user.getUid();
+            DocumentReference userDoc = fStore.collection("users").document(userId);
 
-                        // Update TextViews
-                        profileName.setText(name != null ? name : "No Name");
-                        profileUsername.setText(username != null ? "@" + username : "@unknown");
-                    }
-                })
-                .addOnFailureListener(e ->
-                        Toast.makeText(ProfileActivity.this, "Failed to load user data", Toast.LENGTH_SHORT).show());
+            userDoc.get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            // Fetch username and email
+                            String username = documentSnapshot.getString("username");
+                            String email = documentSnapshot.getString("email");
+
+                            // Update TextViews
+                            profileUsername.setText(username != null ? username : "No Name");
+                            profileEmail.setText(email != null ? email : "@unknown");
+                        }
+                    })
+                    .addOnFailureListener(e ->
+                            Toast.makeText(ProfileActivity.this, "Failed to load user data", Toast.LENGTH_SHORT).show());
+        } else {
+            Toast.makeText(ProfileActivity.this, "User not logged in", Toast.LENGTH_SHORT).show();
+        }
     }
 }

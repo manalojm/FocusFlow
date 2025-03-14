@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/blocking_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="failure is a stepping stone to success"
@@ -16,7 +17,14 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:clickable="false"
-        android:textStyle="italic"/>
+        android:textStyle="italic"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
         android:id="@+id/dismiss"

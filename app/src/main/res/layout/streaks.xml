@@ -17,7 +17,7 @@
     <View
         android:id="@+id/streakbanner"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:background="@drawable/menu"
         android:layout_centerInParent="true"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,7 +28,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
         android:textColor="@color/black"
         android:textSize="20sp"
