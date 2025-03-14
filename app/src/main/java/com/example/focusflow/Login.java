@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            Intent intent = new Intent(Login.this, Dashboard.class); // Redirect to Dashboard instead of Login
+            Intent intent = new Intent(Login.this, SettingsRedirect.class); // Redirect to Dashboard instead of Login
             startActivity(intent);
             finish();
         }
