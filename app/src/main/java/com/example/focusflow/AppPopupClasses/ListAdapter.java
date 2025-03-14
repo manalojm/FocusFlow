@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.focusflow.AppPopup;
+import com.example.focusflow.Cache.CachePreloader;
+import com.example.focusflow.Cache.CacheStorage;
 import com.example.focusflow.R;
 import java.util.List;
 
@@ -31,36 +34,40 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+//Startup
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
         }
+
         Switch appSwitch = convertView.findViewById(R.id.switch1);
         ImageView iconView = convertView.findViewById(R.id.icon);
         TextView nameView = convertView.findViewById(R.id.appName);
 
         AppInfo appInfo = appList.get(position);
         PackageInfo packageInfo = appInfo.getPackageInfo();
+        String appName = pm.getApplicationLabel(packageInfo.applicationInfo).toString();
+        nameView.setText(appName);
+        iconView.setImageResource(R.drawable.focusflow_logo);
 
-        try {
-            String appName = pm.getApplicationLabel(packageInfo.applicationInfo).toString();
-            Drawable appIcon = pm.getApplicationIcon(packageInfo.packageName);
+//Startup
 
-            nameView.setText(appName);
-            iconView.setImageDrawable(appIcon);
-        } catch (Exception e) {
-            Log.e("ListAdapter", "Error retrieving app details for " + packageInfo.packageName, e);
-        }
+        //Thread for loading icons without freezing UI
+        new Thread(() -> { //There is witchcraft in this thread, even i don't know how this works
+            try {
+                Drawable appIcon = pm.getApplicationIcon(packageInfo.packageName);
+                ((AppPopup) context).runOnUiThread(() -> iconView.setImageDrawable(appIcon));
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.e("ListAdapter", "App icon not found for " + packageInfo.packageName, e);
+            }
+        }).start();
+
+        boolean isChecked = getSwitchState(packageInfo.packageName);
+        setSwitchState(appSwitch,isChecked);
 
         convertView.setOnClickListener(v -> {
-            boolean newState = !appSwitch.isChecked();
-            appSwitch.setChecked(newState);
-            int newColor;
-            if (newState) {
-                appSwitch.getTrackDrawable().setTint(ContextCompat.getColor(context, R.color.custom_track_color));
-            } else {
-                newColor = (ContextCompat.getColor(context, R.color.custom_track_color));
-                appSwitch.getTrackDrawable().setTint(newColor);
-            }
+            appSwitch.toggle();
+            setSwitchState(appSwitch,appSwitch.isChecked());
             Log.d("ListAdapter", "Clicked on app: " + packageInfo.packageName);
             if(AccessibilityService.checkAppList(packageInfo.packageName)){
                 AccessibilityService.removeApp(packageInfo.packageName);
@@ -71,13 +78,26 @@ public class ListAdapter extends BaseAdapter {
                 return;
             }
         });
-
         return convertView;
+    }
+    private void setSwitchState(Switch appSwitch, boolean isChecked) {
+        appSwitch.setChecked(isChecked);
+        if (isChecked) {
+            appSwitch.getThumbDrawable().setTint(ContextCompat.getColor(context, R.color.custom_track_color));
+        }
+        else{
+            appSwitch.getThumbDrawable().setTint(ContextCompat.getColor(context, R.color.custom_track_color_off));
+        }
     }
 
     @Override
     public int getCount() {
         return appList.size();
+    }
+
+    private boolean getSwitchState(String packageName) {
+        CacheStorage cache = CachePreloader.getCacheStorage();
+        return cache.isAppBlocked(packageName);
     }
 
     @Override

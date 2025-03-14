@@ -6,6 +6,8 @@ import android.view.accessibility.AccessibilityEvent;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.focusflow.Cache.CachePreloader;
+import com.example.focusflow.Cache.CacheStorage;
 import com.example.focusflow.Dashboard;
 
 import java.util.ArrayList;
@@ -13,18 +15,25 @@ import java.util.List;
 
 public class AccessibilityService extends android.accessibilityservice.AccessibilityService {
     private static List<String> blockedApps = new ArrayList<>();
+    private static CacheStorage cacheStorage;
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        cacheStorage = CachePreloader.getCacheStorage();
+        blockedApps = cacheStorage.getBlockedApps();
+        Log.d("AccessibilityService", "📥 Loaded blocked apps: " + blockedApps);
+    }
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        //If event received is not what we are looking for ("TYPE_WINDOW_STATE_CHANGED" or "TYPE_WINDOWS_CHANGED"), return
-        if (event == null || event.getPackageName() == null || !Dashboard.isBlocking()||
+        if (event == null || event.getPackageName() == null || !Dashboard.isBlocking() ||
                 (event.getEventType() != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED &&
                         event.getEventType() != AccessibilityEvent.TYPE_WINDOWS_CHANGED))
             return;
 
         String packageName = event.getPackageName().toString();
-        if (isSystemApp(packageName)) return; //If system app, return
+        if (isSystemApp(packageName)) return;
 
         Log.d("AccessibilityService", "Detected app: " + packageName);
 
@@ -54,7 +63,6 @@ public class AccessibilityService extends android.accessibilityservice.Accessibi
     public void onInterrupt() {
         Log.d("AccessibilityService", "⚠️ Accessibility Service Interrupted");
         stopService(new Intent(this, OverlayService.class));
-
     }
 
     @Override
@@ -64,18 +72,25 @@ public class AccessibilityService extends android.accessibilityservice.Accessibi
         stopService(new Intent(this, OverlayService.class));
     }
 
-    public static void addApp(String app){
-        blockedApps.add(app);
-    }
-    public static void removeApp(String app){
-        blockedApps.remove(app);
-    }
-    public static boolean checkAppList(String app) {
-        for (String string : blockedApps) {
-            if(app.equals(string)){
-                return true;
-            }
+    public static void addApp(String app) {
+        if (!blockedApps.contains(app)) {
+            blockedApps.add(app);
+            cacheStorage.addBlockedApp(app);
         }
-        return false;
+    }
+
+    public static void removeApp(String app) {
+        if (blockedApps.contains(app)) {
+            blockedApps.remove(app);
+            cacheStorage.removeBlockedApp(app);
+        }
+    }
+
+    public static boolean checkAppList(String app) {
+        return blockedApps.contains(app);
+    }
+
+    public static boolean isAppListEmpty() {
+        return blockedApps.isEmpty();
     }
 }

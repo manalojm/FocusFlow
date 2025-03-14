@@ -37,30 +37,27 @@ public class AppPopup extends AppCompatActivity {
 
         ImageButton btnBack = findViewById(R.id.backButton);
         NavigationUtility.setNavigation(this,btnBack,SelectionPage.class);
-
-
-        try {
-            getallapps();
-        } catch (PackageManager.NameNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        getallapps();
     }
 
-    public void getallapps() throws PackageManager.NameNotFoundException {
-        List<PackageInfo> packList = getPackageManager().getInstalledPackages(0);
-        List<AppInfo> appInfoList = new ArrayList<>();
+    public void getallapps() {
+        new Thread(() -> {
+            List<PackageInfo> packList = getPackageManager().getInstalledPackages(0);
+            List<AppInfo> appInfoList = new ArrayList<>();
 
-        for (PackageInfo info : packList) {
-            if ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) { //Check if valid application
-                String appName = info.applicationInfo.loadLabel(getPackageManager()).toString();
-                Drawable appIcon = getPackageManager().getApplicationIcon(info.packageName);
-                appInfoList.add(new AppInfo(info));
+            for (PackageInfo info : packList) {
+                if ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) { // Only user-installed apps
+                    appInfoList.add(new AppInfo(info)); // Don't load icons immediately!
+                }
             }
-        }
 
-        listView.setAdapter(new ListAdapter(this, appInfoList));
-        text.setText(appInfoList.size() + " Apps are installed");
+            runOnUiThread(() -> {
+                listView.setAdapter(new ListAdapter(this, appInfoList));
+                text.setText(appInfoList.size() + " Apps are installed");
+            });
+        }).start();
     }
+
 
 }
 
