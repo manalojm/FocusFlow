@@ -17,7 +17,7 @@
     </View>
 
     <ImageButton
-        android:id="@+id/activity"
+        android:id="@+id/ActivityLog"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:background="?attr/selectableItemBackgroundBorderless"

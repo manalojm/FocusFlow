@@ -1,8 +1,10 @@
 package com.example.focusflow;
 
+import android.content.Context;
 import android.os.CountDownTimer;
 import android.util.Log;
 
+import com.example.focusflow.ActivityLog.TimerSessionLogger;
 import com.example.focusflow.Cache.CachePreloader;
 import com.example.focusflow.Cache.CacheStorage;
 
@@ -26,7 +28,7 @@ public class TimerManager {
         return instance;
     }
 
-    public void startTimer(long duration, TimerListener listener) {
+    public void startTimer(long duration, TimerListener listener, Context context) {
         Log.d("TimerManager", "Starting timer with duration: " + duration);
         if (countDownTimer != null) {
             countDownTimer.cancel();
@@ -49,6 +51,11 @@ public class TimerManager {
                 timeRemaining = 0;
                 cache.saveBlockState(false);
                 cache.saveTime(0L);
+                TimerSessionLogger.getInstance(context).endSession();
+
+                if (listener != null) {
+                    listener.onFinish(); // Notify Dashboard
+                }
             }
 
         }.start();
@@ -70,5 +77,6 @@ public class TimerManager {
 
     public interface TimerListener {
         void onTick(long millisRemaining);
+        void onFinish();
     }
 }

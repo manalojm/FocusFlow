@@ -93,14 +93,23 @@ public class Dashboard extends AppCompatActivity {
         return time == 0L;
     }
     private void startCountdown(long durationMs) {
-        timerManager.startTimer(durationMs,
-                millisRemaining -> {
-                    time = millisRemaining;
-                    setTime(time);
-                    cache.saveTime(time);
+        timerManager.startTimer(durationMs, new TimerManager.TimerListener() {
+            @Override
+            public void onTick(long millisRemaining) {
+                time = millisRemaining;
+                setTime(time);
+                cache.saveTime(time);
             }
-        );
+
+            @Override
+            public void onFinish() {
+                playing = false;
+                cache.saveBlockState(false);
+                updatePlayButton(findViewById(R.id.playstop)); // Update UI when timer finishes
+            }
+        }, this);
     }
+
     private void updatePlayButton(Button btnPlayStop) {
         if (playing) {
             btnPlayStop.setText("Stop");

@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.focusflow.ActivityLog.TimerSessionLogger;
 import com.example.focusflow.Cache.CachePreloader;
 import com.example.focusflow.Cache.CacheStorage;
 
@@ -39,6 +40,7 @@ public class SelectionPage extends AppCompatActivity {
             Toast.makeText(this, "Time Set\n"+timeFormatted, Toast.LENGTH_SHORT).show();
             CacheStorage cache = CachePreloader.getCacheStorage();
             cache.saveTime(ms);
+            TimerSessionLogger.getInstance(SelectionPage.this).startSession(ms);
         });
 
         viewApps.requestFocus();

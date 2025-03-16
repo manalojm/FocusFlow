@@ -113,6 +113,7 @@ public class ProfileActivity extends AppCompatActivity {
         ImageButton btnAccPage = findViewById(R.id.account);
         ImageButton btnStatsPage = findViewById(R.id.stats);
         ImageButton btnHomePage = findViewById(R.id.home);
+        ImageButton btnLog = findViewById(R.id.ActivityLog);
 
 
         btnAccPage.setOnClickListener(view -> {
@@ -132,6 +133,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         NavigationUtility.setNavigation(this, btnStatsPage, StreaksPage.class);
         NavigationUtility.setNavigation(this, btnHomePage, Dashboard.class);
+        NavigationUtility.setNavigation(this, btnLog, LogsPopup.class);
     }
 
     //debugging purposes :P
