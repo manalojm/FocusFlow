@@ -58,4 +58,9 @@ public class SettingsRedirect  extends AppCompatActivity {
         String enabledServices = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
         return enabledServices!=null&&enabledServices.contains(this.getPackageName()); //Witchcraft idk
     }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        recurringCheck();
+    }
 }
