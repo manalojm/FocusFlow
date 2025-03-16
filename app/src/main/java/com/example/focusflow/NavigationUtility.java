@@ -15,4 +15,9 @@ public class NavigationUtility {
             }
         });
     }
+    public static void instantNavigation(Activity activity, final Class<?> targetActivity) {
+        Intent intent = new Intent(activity, targetActivity);
+        activity.startActivity(intent);
+        activity.finish();
+    }
 }

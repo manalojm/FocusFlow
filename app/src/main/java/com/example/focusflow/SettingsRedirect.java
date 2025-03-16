@@ -33,6 +33,7 @@ public class SettingsRedirect  extends AppCompatActivity {
         if (!Settings.canDrawOverlays(this)) {
             return;
         }
+        Toast.makeText(this, "All required settings enabled", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, Dashboard.class);
         startActivity(intent);
     }
@@ -49,7 +50,7 @@ public class SettingsRedirect  extends AppCompatActivity {
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
             intent.setData(Uri.parse("package:" + this.getPackageName()));
             this.startActivity(intent);
-            Toast.makeText(this, "Enable 'Draw Over Other Apps' permission.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Enable 'Draw Over Other Apps' for FocusFlow.", Toast.LENGTH_LONG).show();
             return false;
         }
         else return true;
