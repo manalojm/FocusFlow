@@ -15,6 +15,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
     </View>
+
+    <ImageButton
+        android:id="@+id/activity"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="Activity"
+        android:focusable="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/activity_logs_icon"
+        app:layout_constraintTop_toBottomOf="@id/menuHead"
+        />
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profilePic"
         android:layout_width="300dp"
