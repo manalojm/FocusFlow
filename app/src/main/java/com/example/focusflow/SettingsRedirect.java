@@ -2,6 +2,7 @@ package com.example.focusflow;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.app.Activity;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Button;
@@ -10,17 +11,30 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 public class SettingsRedirect  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        recurringCheck();
         setContentView(R.layout.check_settings);
-        TextView text = findViewById(R.id.directions);
         Button btnCheckSettings = findViewById(R.id.btn_checksettings);
         btnCheckSettings.setOnClickListener(view -> {
-            if(checkSettings()){
-                text.setText("All required settings enabled, click button to proceed.");
+            if (checkSettings()) {
+                Intent intent = new Intent(this, Dashboard.class);
+                startActivity(intent);
             }
         });
+    }
+    private void recurringCheck(){ //So that users who have enabled settings can skip the page
+        if (!isAccessEnabled()) {
+            return;
+        }
+        //Check and ask for Overlay permission
+        if (!Settings.canDrawOverlays(this)) {
+            return;
+        }
+        Intent intent = new Intent(this, Dashboard.class);
+        startActivity(intent);
     }
     private boolean checkSettings(){
         if (!isAccessEnabled()) {
