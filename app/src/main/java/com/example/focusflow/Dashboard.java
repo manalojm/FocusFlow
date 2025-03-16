@@ -20,6 +20,17 @@ import com.example.focusflow.AppPopupClasses.AccessibilityService;
 import com.example.focusflow.AppPopupClasses.OverlayService;
 import com.example.focusflow.Cache.CachePreloader;
 import com.example.focusflow.Cache.CacheStorage;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class Dashboard extends AppCompatActivity {
     private static boolean playing;
@@ -105,10 +116,32 @@ public class Dashboard extends AppCompatActivity {
             public void onFinish() {
                 playing = false;
                 cache.saveBlockState(false);
-                updatePlayButton(findViewById(R.id.playstop)); // Update UI when timer finishes
-            }
+                updatePlayButton(findViewById(R.id.playstop));
+                // Update UI when timer finishes
+                markTimerCompleted();            }
         }, this);
+
+
     }
+
+    private void markTimerCompleted() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        DocumentReference streakRef = db.collection("users").document(userId)
+                .collection("streaks").document("currentStreak");
+
+        String todayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("streakCount", FieldValue.increment(1)); // Increment streak count
+        data.put("completedDates", FieldValue.arrayUnion(todayDate)); // Add date to Firestore array
+
+        streakRef.set(data, SetOptions.merge())
+                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Streak marked successfully."))
+                .addOnFailureListener(e -> Log.e("Firestore", "Failed to update streak", e));
+    }
+
 
     private void updatePlayButton(Button btnPlayStop) {
         if (playing) {

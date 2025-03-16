@@ -31,29 +31,37 @@ import kotlin.jvm.functions.Function1;
 public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser username;
+    private FirebaseUser email;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     private Uri selectedImageUri;
     private ImageView profilePic;
     private FirebaseFirestore fStore; // Add this
     private String Uid;
 
+
     private void savePFPtoFirestore(String imageUrl) {
-        if (Uid == null) return;
-        Uid = mAuth.getCurrentUser().getUid();
-        DocumentReference documentReference = fStore.collection("profile pic").document(Uid);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) return;
+
+        Uid = currentUser.getUid();
+        DocumentReference documentReference = fStore.collection("users").document(Uid);
+
         Map<String, Object> user = new HashMap<>();
-        user.put("username", username.getDisplayName());
-        user.put("pfp", profilePic.getTag());
-        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+        user.put("pfp", imageUrl); // Only updating the profile picture field
 
-            public static final String TAG = "TAG";
-
-            @Override
-            public void onSuccess(Void unused) {
-                Log.d(TAG, "Profile Picture set for " + Uid);
+        documentReference.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                documentReference.update(user) // Update only the "pfp" field
+                        .addOnSuccessListener(unused -> Log.d("TAG", "Profile picture updated for " + Uid))
+                        .addOnFailureListener(e -> Log.e("Firestore", "Error updating profile picture", e));
+            } else {
+                documentReference.set(user) // Create document if it doesn't exist
+                        .addOnSuccessListener(unused -> Log.d("TAG", "Profile created with picture for " + Uid))
+                        .addOnFailureListener(e -> Log.e("Firestore", "Error creating profile", e));
             }
-        });
+        }).addOnFailureListener(e -> Log.e("Firestore", "Error fetching user document", e));
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +89,8 @@ public class ProfileActivity extends AppCompatActivity {
                             selectedImageUri = data.getData();
                             Glide.with(this).load(selectedImageUri).into(profilePic);
 
-                            profilePic.setTag(selectedImageUri.toString());
-
-                            savePFPtoFirestore(selectedImageUri.toString());
+                            // Save to Firestore
+                            savePFPtoFirestore(String.valueOf(selectedImageUri));
                         }
                     }
                 });
@@ -138,27 +145,27 @@ public class ProfileActivity extends AppCompatActivity {
 
     //debugging purposes :P
     private void loadUserDetails(TextView profileUsername, TextView profileEmail) {
-        if (profileEmail == null) return;
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String userId = user.getUid();
             DocumentReference userDoc = fStore.collection("users").document(userId);
 
-            userDoc.get()
-                    .addOnSuccessListener(documentSnapshot -> {
-                        if (documentSnapshot.exists()) {
-                            // Fetch username and email
-                            String username = documentSnapshot.getString("username");
-                            String email = documentSnapshot.getString("email");
+            userDoc.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    String username = documentSnapshot.getString("username");
+                    String email = documentSnapshot.getString("email");
+                    String profileImageUrl = documentSnapshot.getString("pfp");
 
-                            // Update TextViews
-                            profileUsername.setText(username != null ? username : "No Name");
-                            profileEmail.setText(email != null ? email : "@unknown");
-                        }
-                    })
-                    .addOnFailureListener(e ->
-                            Toast.makeText(ProfileActivity.this, "Failed to load user data", Toast.LENGTH_SHORT).show());
+                    profileUsername.setText(username != null ? username : "No Name");
+                    profileEmail.setText(email != null ? email : "@unknown");
+
+                    if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
+                        Glide.with(this).load(profileImageUrl).into(profilePic);
+                    }
+                }
+            }).addOnFailureListener(e ->
+                    Toast.makeText(ProfileActivity.this, "Failed to load user data", Toast.LENGTH_SHORT).show()
+            );
         } else {
             Toast.makeText(ProfileActivity.this, "User not logged in", Toast.LENGTH_SHORT).show();
         }
