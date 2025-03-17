@@ -118,10 +118,9 @@ public class Dashboard extends AppCompatActivity {
                 cache.saveBlockState(false);
                 updatePlayButton(findViewById(R.id.playstop));
                 // Update UI when timer finishes
-                markTimerCompleted();            }
+                markTimerCompleted();
+            }
         }, this);
-
-
     }
 
     private void markTimerCompleted() {

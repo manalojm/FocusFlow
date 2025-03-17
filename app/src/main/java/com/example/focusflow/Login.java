@@ -1,6 +1,4 @@
 package com.example.focusflow;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -34,9 +32,7 @@ public class Login extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            Intent intent = new Intent(Login.this, Dashboard.class); // Redirect to Dashboard instead of Login
-            startActivity(intent);
-            finish();
+            NavigationUtility.instantNavigation(this, SettingsRedirect.class); // Redirect to SettingsRedirect instead of Login
         }
     }
 
@@ -53,8 +49,7 @@ public class Login extends AppCompatActivity {
         textView = findViewById(R.id.registerNow);
 
         textView.setOnClickListener(v -> {
-            Intent intent = new Intent(Login.this, SignUpPage.class);
-            startActivity(intent);
+            NavigationUtility.instantNavigation(this, SignUpPage.class);
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -82,9 +77,7 @@ public class Login extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             Toast.makeText(Login.this, "Login Successful.", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(Login.this, SettingsRedirect.class); // Redirect to Settings Request
-                            startActivity(intent);
-                            finish();
+                            NavigationUtility.instantNavigation(this, SettingsRedirect.class);
                         } else {
                             Toast.makeText(Login.this, "Authentication failed: " + task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
