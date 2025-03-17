@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
 
     <ListView
         android:id="@+id/listViewSessions"
@@ -15,5 +16,7 @@
         android:id="@+id/btnBackToDashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/custom_track_color"
+        android:textColor="@color/white"
         android:text="Back to Dashboard" />
 </LinearLayout>
