@@ -21,7 +21,7 @@ RUN mvn dependency:go-offline
 # If using Gradle: RUN gradle dependencies
 
 # Copy the rest of your application's source code into the container
-COPY src ./src
+COPY app/src ./src
 
 # Build the Java application into a JAR file.
 # -DskipTests is used to skip running tests during the Docker build,
