@@ -173,7 +173,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    //debugging purposes :P
     private void loadUserDetails(TextView profileUsername, TextView profileEmail) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
