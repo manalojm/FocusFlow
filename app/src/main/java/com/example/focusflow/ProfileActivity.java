@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,9 +22,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import kotlin.Unit;
@@ -141,6 +146,31 @@ public class ProfileActivity extends AppCompatActivity {
         NavigationUtility.setNavigation(this, btnStatsPage, StreaksPage.class);
         NavigationUtility.setNavigation(this, btnHomePage, Dashboard.class);
         NavigationUtility.setNavigation(this, btnLog, LogsPopup.class);
+
+        username = mAuth.getCurrentUser();
+        fStore = FirebaseFirestore.getInstance();
+        Button btnBackup = findViewById(R.id.btnBackup);
+        btnBackup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (username != null) {
+                    String uid = username.getUid();
+                    fetchAndBackupStreaks(uid);
+                }
+            }
+        });
+
+        Button btnRestore = findViewById(R.id.btnRestore);
+        btnRestore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (username != null) {
+                    String uid = username.getUid();
+                    restoreStreakBackup(uid);
+                }
+            }
+        });
+
     }
 
     //debugging purposes :P
@@ -170,4 +200,88 @@ public class ProfileActivity extends AppCompatActivity {
             Toast.makeText(ProfileActivity.this, "User not logged in", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void fetchAndBackupStreaks(String uid) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        DocumentReference streakRef = db.collection("users").document(uid)
+                .collection("streaks").document("currentStreak");
+
+        streakRef.get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Map<String, Object> streakData = documentSnapshot.getData();
+
+                        if (streakData != null && !streakData.isEmpty()) {
+                            backupStreakData(uid, streakData);
+                        } else {
+                            Toast.makeText(ProfileActivity.this, "No streak data found", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(ProfileActivity.this, "No currentStreak document", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(ProfileActivity.this, "Failed to fetch streaks: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
+
+    private void backupStreakData(String uid, Map<String, Object> streakData) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> backup = new HashMap<>();
+        backup.put("streak", streakData);
+        backup.put("backupTimestamp", System.currentTimeMillis());
+
+        db.collection("backups").document(uid)
+                .set(backup)
+                .addOnSuccessListener(aVoid ->
+                        Toast.makeText(ProfileActivity.this, "Backup successful!", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e ->
+                        Toast.makeText(ProfileActivity.this, "Backup failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
+    private void restoreStreakBackup(String uid) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("backups").document(uid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Map<String, Object> streakData = (Map<String, Object>) documentSnapshot.get("streak");
+
+                        if (streakData != null && !streakData.isEmpty()) {
+                            db.collection("users").document(uid)
+                                    .collection("streaks").document("currentStreak")
+                                    .set(streakData)
+                                    .addOnSuccessListener(aVoid ->
+                                            Toast.makeText(ProfileActivity.this, "Streak restored!", Toast.LENGTH_SHORT).show())
+                                    .addOnFailureListener(e ->
+                                            Toast.makeText(ProfileActivity.this, "Failed to restore: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                        } else {
+                            Toast.makeText(ProfileActivity.this, "No streak data in backup", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(ProfileActivity.this, "No backup found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(ProfileActivity.this, "Failed to retrieve backup: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
+    private void writeStreaksToFirestore(String uid, List<Map<String, Object>> streaks) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        for (Map<String, Object> streak : streaks) {
+            // Optional: provide your own document ID logic
+            db.collection("streaks").document(uid)
+                    .collection("entries")
+                    .add(streak)
+                    .addOnFailureListener(e ->
+                            Log.e("Restore", "Failed to restore streak: " + e.getMessage()));
+        }
+
+        Toast.makeText(ProfileActivity.this, "Streaks restored from backup", Toast.LENGTH_SHORT).show();
+    }
+
 }
