@@ -1,5 +1,6 @@
 package com.example.focusflow;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,10 @@ import com.example.focusflow.ActivityLog.TimerSessionLogger;
 import com.example.focusflow.Cache.CachePreloader;
 import com.example.focusflow.Cache.CacheStorage;
 
+import android.graphics.drawable.Drawable;
+import android.widget.LinearLayout;
+import java.util.List;
+
 public class SelectionPage extends AppCompatActivity {
 
     EditText textHours, textMinute;
@@ -22,8 +27,10 @@ public class SelectionPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selection);
 
+
+
         //Buttons
-        View viewApps = findViewById(R.id.appbox);
+        LinearLayout viewApps = findViewById(R.id.appbox);
         ImageButton btnHomePage = findViewById(R.id.home);
         ImageButton btnAccPage = findViewById(R.id.account);
         ImageButton btnStreaksPage = findViewById(R.id.stats);
@@ -50,7 +57,42 @@ public class SelectionPage extends AppCompatActivity {
         NavigationUtility.setNavigation(this, btnStreaksPage, StreaksPage.class);
         NavigationUtility.setNavigation(this, btnAccPage, ProfileActivity.class);
 
+        // Load icons of blocked apps into appbox
+        loadSelectedAppIcons();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadSelectedAppIcons(); // Refresh icons whenever page is visible again
+    }
+
+    private void loadSelectedAppIcons() {
+        LinearLayout appbox = findViewById(R.id.appbox);
+        appbox.removeAllViews(); // Clear any previous icons
+
+        PackageManager pm = getPackageManager();
+        CacheStorage cache = CachePreloader.getCacheStorage();
+        List<String> blockedApps = cache.getBlockedApps();
+
+        for (String packageName : blockedApps) {
+            try {
+                Drawable icon = pm.getApplicationIcon(packageName);
+
+                ImageButton iconView = new ImageButton(this);
+                iconView.setImageDrawable(icon);
+                iconView.setBackground(null); // Remove default background
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(100, 100);
+                params.setMargins(10, 0, 10, 0);
+                iconView.setLayoutParams(params);
+
+                appbox.addView(iconView);
+
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
