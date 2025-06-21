@@ -45,8 +45,13 @@ public class AppPopup extends AppCompatActivity {
             List<PackageInfo> packList = getPackageManager().getInstalledPackages(0);
             List<AppInfo> appInfoList = new ArrayList<>();
 
+            String myPackageName = getPackageName();
+
             for (PackageInfo info : packList) {
-                if ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) { // Only user-installed apps
+                boolean isUserApp = (info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0;
+                boolean isNotSelf = !info.packageName.equals(myPackageName);
+
+                if (isUserApp && isNotSelf) {
                     appInfoList.add(new AppInfo(info)); // Don't load icons immediately!
                 }
             }
