@@ -15,7 +15,18 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Comparator;
+import java.util.Locale;
+
 
 public class StreaksPage extends AppCompatActivity {
     private TextView streakCountTextView;
@@ -58,9 +69,55 @@ public class StreaksPage extends AppCompatActivity {
                 .collection("streaks").document("currentStreak");
 
         docRef.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists() && documentSnapshot.contains("streakCount")) {
-                int streakCount = documentSnapshot.getLong("streakCount").intValue();
-                streakCountTextView.setText(String.valueOf(streakCount));
+            if (documentSnapshot.exists() && documentSnapshot.contains("completedDates")) {
+                List<String> dateStrings = (List<String>) documentSnapshot.get("completedDates");
+                List<Calendar> dates = new ArrayList<>();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                for (String dateStr : dateStrings) {
+                    try {
+                        Date date = sdf.parse(dateStr);
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(date);
+                        // Clear time fields to avoid false mismatch
+                        cal.set(Calendar.HOUR_OF_DAY, 0);
+                        cal.set(Calendar.MINUTE, 0);
+                        cal.set(Calendar.SECOND, 0);
+                        cal.set(Calendar.MILLISECOND, 0);
+                        dates.add(cal);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // Sort dates
+                dates.sort(Comparator.comparing(Calendar::getTime));
+
+                int currentStreak = 1;
+                int maxStreak = 1;
+
+                for (int i = 1; i < dates.size(); i++) {
+                    Calendar prev = dates.get(i - 1);
+                    Calendar curr = dates.get(i);
+
+                    // Clone previous date and add one day
+                    Calendar prevPlusOne = (Calendar) prev.clone();
+                    prevPlusOne.add(Calendar.DAY_OF_YEAR, 1);
+
+                    // If current date is exactly 1 day after previous
+                    if (curr.get(Calendar.YEAR) == prevPlusOne.get(Calendar.YEAR) &&
+                            curr.get(Calendar.DAY_OF_YEAR) == prevPlusOne.get(Calendar.DAY_OF_YEAR)) {
+                        currentStreak++;
+                        maxStreak = Math.max(maxStreak, currentStreak);
+                    } else {
+                        currentStreak = 1;
+                    }
+                }
+
+                // Set the streak count (you can choose to show currentStreak or maxStreak)
+                streakCountTextView.setText(String.valueOf(currentStreak));
+
             } else {
                 streakCountTextView.setText("0");
             }
@@ -68,6 +125,7 @@ public class StreaksPage extends AppCompatActivity {
                 Toast.makeText(StreaksPage.this, "Failed to load streak data", Toast.LENGTH_SHORT).show()
         );
     }
+
 
     private void fetchStreakDates() {
         db.collection("users").document(userId)
