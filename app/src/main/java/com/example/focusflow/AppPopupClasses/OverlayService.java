@@ -19,6 +19,15 @@ import com.example.focusflow.Dashboard;
 import com.example.focusflow.NavigationUtility;
 import com.example.focusflow.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class OverlayService extends Service {
@@ -32,7 +41,7 @@ public class OverlayService extends Service {
         overlayView = LayoutInflater.from(this).inflate(R.layout.blocking_overlay, null);
 
         // Get a random block message
-        String message = getRandomBlockMessage();
+        String message = getRandomBlockMessage(this);
 
         // Find the TextView and set the message
         TextView messageTextView = overlayView.findViewById(R.id.blocking_message);
@@ -82,14 +91,33 @@ public class OverlayService extends Service {
         return null;
     }
 
-    private String getRandomBlockMessage() {
-        String[] messages = {
-                "Stay focused! Don't let distractions win.",
-                "You're better than this! Keep going.",
-                "Discipline is choosing between what you want now and what you want most.",
-                "Every moment counts—stay on track!",
-                "Success is built on small daily habits."
-        };
-        return messages[new Random().nextInt(messages.length)];
+    // Load messages from raw resources
+    private List<String> loadBlockMessagesFromRaw(Context context) {
+        List<String> messages = new ArrayList<>();
+        try {
+            InputStream is = context.getResources().openRawResource(R.raw.block_messages);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            String json = new String(buffer, StandardCharsets.UTF_8);
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray jsonArray = jsonObject.getJSONArray("messages");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                messages.add(jsonArray.getString(i));
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return messages;
+    }
+
+    // Get a random block message
+    private String getRandomBlockMessage(Context context) {
+        List<String> messages = loadBlockMessagesFromRaw(context);
+        if (messages.isEmpty()) {
+            return "Focus time!"; // fallback message
+        }
+        return messages.get(new Random().nextInt(messages.size()));
     }
 }
