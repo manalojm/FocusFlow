@@ -14,6 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.google.firebase.firestore.CollectionReference;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 
 public class StreaksPage extends AppCompatActivity {
@@ -117,6 +121,7 @@ public class StreaksPage extends AppCompatActivity {
 
                 // Set the streak count (you can choose to show currentStreak or maxStreak)
                 streakCountTextView.setText(String.valueOf(currentStreak));
+                checkAchievements(currentStreak);
 
             } else {
                 streakCountTextView.setText("0");
@@ -163,5 +168,74 @@ public class StreaksPage extends AppCompatActivity {
                 .addOnFailureListener(e -> Log.e("StreaksPage", "Failed to load streak dates", e));
     }
 
+    private void checkAchievements(int currentStreak) {
+        // Log the current streak for debugging
+        Log.d("Achievements", "Checking achievements for streak: " + currentStreak);
 
+        // Define your achievements here
+        // You can fetch these from Firestore later if you want to make them dynamic
+        Map<String, Integer> achievementThresholds = new HashMap<>();
+        achievementThresholds.put("achievement_1_day", 1);
+        achievementThresholds.put("achievement_7_days", 7);
+        achievementThresholds.put("achievement_30_days", 30);
+        achievementThresholds.put("achievement_100_days", 100);
+
+        // Check if the user has unlocked any achievements
+        CollectionReference achievementsRef = db.collection("users").document(userId).collection("achievements");
+
+        for (Map.Entry<String, Integer> entry : achievementThresholds.entrySet()) {
+            String achievementId = entry.getKey();
+            int requiredDays = entry.getValue();
+
+            // Check if the current streak meets the requirement
+            if (currentStreak >= requiredDays) {
+                // Check if the user has already unlocked this achievement
+                achievementsRef.document(achievementId).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        if (!task.getResult().exists()) {
+                            // The achievement is not yet unlocked, so unlock it!
+                            unlockAchievement(achievementsRef, achievementId);
+                        } else {
+                            Log.d("Achievements", "Achievement '" + achievementId + "' already unlocked.");
+                        }
+                    } else {
+                        Log.e("Achievements", "Failed to check achievement status for '" + achievementId + "'", task.getException());
+                    }
+                });
+            }
+        }
+    }
+
+    private void unlockAchievement(CollectionReference achievementsRef, String achievementId) {
+        Map<String, Object> unlockedData = new HashMap<>();
+        unlockedData.put("unlocked", true);
+        unlockedData.put("unlockedTimestamp", System.currentTimeMillis());
+
+        achievementsRef.document(achievementId).set(unlockedData)
+                .addOnSuccessListener(aVoid -> {
+                    String message = "Achievement Unlocked: " + getAchievementName(achievementId) + "!";
+                    Toast.makeText(StreaksPage.this, message, Toast.LENGTH_LONG).show();
+                    Log.d("Achievements", "Unlocked achievement: " + achievementId);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Achievements", "Failed to unlock achievement: " + achievementId, e);
+                    Toast.makeText(StreaksPage.this, "Failed to unlock achievement.", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private String getAchievementName(String achievementId) {
+        // You can make this more robust by storing names in a map or fetching them from Firestore
+        switch (achievementId) {
+            case "achievement_1_day":
+                return "First Step";
+            case "achievement_7_days":
+                return "Consistency";
+            case "achievement_30_days":
+                return "Dedication";
+            case "achievement_100_days":
+                return "Focus Master";
+            default:
+                return achievementId;
+        }
+    }
 }
