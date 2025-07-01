@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -80,13 +81,14 @@ public class SelectionPage extends AppCompatActivity {
             try {
                 Drawable icon = pm.getApplicationIcon(packageName);
 
-                ImageButton iconView = new ImageButton(this);
+                ImageView iconView = new ImageView(this);
                 iconView.setImageDrawable(icon);
-                iconView.setBackground(null); // Remove default background
+                iconView.setBackgroundResource(R.drawable.rounded_background); // Set the rounded background
+                iconView.setPadding(16, 16, 16, 16); // Adjust padding as needed
+                iconView.setScaleType(ImageView.ScaleType.CENTER_CROP); // Ensure the icon scales properly
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(100, 100);
                 params.setMargins(10, 0, 10, 0);
                 iconView.setLayoutParams(params);
-
                 appbox.addView(iconView);
 
             } catch (PackageManager.NameNotFoundException e) {
