@@ -12,6 +12,8 @@ import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.text.TextUtils;
+import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -43,8 +45,17 @@ public class BlockedStats extends AppCompatActivity {
         mainLayout.setBackgroundResource(R.drawable.background); // Match streaks background
 
         Spinner filterSpinner = new Spinner(this);
+        filterSpinner.setBackgroundColor(Color.WHITE); // <-- Make background white
+
         String[] filters = new String[]{"This Week", "This Month", "This Year"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, filters);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_dropdown_item,
+                filters
+        );
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filterSpinner.setAdapter(adapter);
 
         LinearLayout chartContainer = findViewById(R.id.chart_container);
@@ -88,6 +99,13 @@ public class BlockedStats extends AppCompatActivity {
             label.setText(app + " - " + count);
             label.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             label.setTextColor(Color.WHITE);
+            label.setMaxLines(1);
+            label.setEllipsize(TextUtils.TruncateAt.END);
+            label.setLayoutParams(new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    1f
+            ));
             barLayout.addView(label);
 
             LinearLayout bar = new LinearLayout(this);
