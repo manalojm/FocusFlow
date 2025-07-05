@@ -16,7 +16,6 @@
         app:layout_constraintEnd_toEndOf="parent">
     </View>
 
-
     <LinearLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
@@ -79,7 +78,16 @@
             android:textColor="#023020">
 
         </Button>
-<!--            app:layout_constraintStart_toStartOf="@id/progress_layout"-->
+
+        <Button
+            android:id="@+id/most_blocked_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#24cda0"
+            android:text="Most Blocked Apps"
+            android:textColor="@android:color/white" />
+        <!--            app:layout_constraintStart_toStartOf="@id/progress_layout"-->
 <!--            app:layout_constraitTop_toBottomOf="@id/progress_layout" />-->
 
 

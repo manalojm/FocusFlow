@@ -58,6 +58,11 @@ public class Dashboard extends AppCompatActivity {
         Button btnPlayStop = findViewById(R.id.playstop);
         progressText = findViewById(R.id.progress_text);
 
+        Button btnBlockedStats = findViewById(R.id.most_blocked_button);
+        btnBlockedStats.setOnClickListener(view -> {
+            startActivity(new Intent(Dashboard.this, BlockedStats.class));
+        });
+
         //Navigation
         btnHomePage.setOnClickListener(view -> {Toast.makeText(this, "You're already on the Dashboard!", Toast.LENGTH_SHORT).show();});
         NavigationUtility.setNavigation(this,btnStatsPage,StreaksPage.class);
