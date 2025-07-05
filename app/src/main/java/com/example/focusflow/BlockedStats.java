@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,12 +38,21 @@ public class BlockedStats extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blocked_stats);
 
+        LinearLayout mainLayout = findViewById(R.id.main_layout);
+        mainLayout.setBackgroundColor(Color.parseColor("#F5F5F5")); // light gray background
+
         Spinner filterSpinner = new Spinner(this);
         String[] filters = new String[]{"This Week", "This Month", "This Year"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, filters);
         filterSpinner.setAdapter(adapter);
+
         LinearLayout chartContainer = findViewById(R.id.chart_container);
-        chartContainer.addView(filterSpinner, 0);
+        chartContainer.setOrientation(LinearLayout.VERTICAL);
+        chartContainer.removeAllViews();
+        chartContainer.setPadding(30, 30, 30, 30);
+        chartContainer.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        chartContainer.addView(filterSpinner);
 
         List<Map.Entry<String, Integer>> sortedApps = new ArrayList<>(blockedApps.entrySet());
         sortedApps.sort((e1, e2) -> e2.getValue() - e1.getValue());
@@ -58,11 +69,12 @@ public class BlockedStats extends AppCompatActivity {
             LinearLayout row = new LinearLayout(this);
             row.setOrientation(LinearLayout.HORIZONTAL);
             row.setPadding(0, 10, 0, 20);
+            row.setGravity(Gravity.CENTER_VERTICAL);
 
             ImageView icon = new ImageView(this);
             Drawable drawable = AppIconUtil.getAppIcon(this, app);
             if (drawable != null) icon.setImageDrawable(drawable);
-            else icon.setImageResource(R.drawable.ic_launcher_foreground);
+            else icon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.focusflow_logo));
             LinearLayout.LayoutParams iconParams = new LinearLayout.LayoutParams(80, 80);
             iconParams.setMargins(0, 0, 16, 0);
             icon.setLayoutParams(iconParams);
@@ -80,7 +92,7 @@ public class BlockedStats extends AppCompatActivity {
             LinearLayout bar = new LinearLayout(this);
             bar.setBackgroundColor(Color.parseColor("#3F51B5"));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    (int) ((count / (float) maxValue) * 600), // Reduced width
+                    (int) ((count / (float) maxValue) * 400), // Reduced width for smaller bars
                     30
             );
             params.setMargins(0, 8, 0, 0);
@@ -91,6 +103,7 @@ public class BlockedStats extends AppCompatActivity {
             chartContainer.addView(row);
         }
 
+        // Navigation buttons
         ImageButton btnAccPage = findViewById(R.id.account);
         ImageButton btnStatsPage = findViewById(R.id.stats);
         ImageButton btnHomePage = findViewById(R.id.home);
@@ -99,4 +112,12 @@ public class BlockedStats extends AppCompatActivity {
                 Toast.makeText(BlockedStats.this, "You're already on the Most Blocked Apps page!", Toast.LENGTH_SHORT).show()
         );
         NavigationUtility.setNavigation(this, btnAccPage, ProfileActivity.class);
-        NavigationUtility.setNavigation(this, btnHomePage, Dashboard.class)
+        NavigationUtility.setNavigation(this, btnHomePage, Dashboard.class);
+
+        // Back button to Dashboard
+        ImageButton backButton = findViewById(R.id.back_button);
+        if (backButton != null) {
+            backButton.setOnClickListener(v -> finish());
+        }
+    }
+}
