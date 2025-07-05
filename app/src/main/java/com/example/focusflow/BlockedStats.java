@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,8 +39,8 @@ public class BlockedStats extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blocked_stats);
 
-        LinearLayout mainLayout = findViewById(R.id.main_layout);
-        mainLayout.setBackgroundColor(Color.parseColor("#F5F5F5")); // light gray background
+        ConstraintLayout mainLayout = findViewById(R.id.main_layout);
+        mainLayout.setBackgroundResource(R.drawable.background); // Match streaks background
 
         Spinner filterSpinner = new Spinner(this);
         String[] filters = new String[]{"This Week", "This Month", "This Year"};
@@ -86,13 +87,13 @@ public class BlockedStats extends AppCompatActivity {
             TextView label = new TextView(this);
             label.setText(app + " - " + count);
             label.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-            label.setTextColor(Color.BLACK);
+            label.setTextColor(Color.WHITE);
             barLayout.addView(label);
 
             LinearLayout bar = new LinearLayout(this);
             bar.setBackgroundColor(Color.parseColor("#3F51B5"));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    (int) ((count / (float) maxValue) * 400), // Reduced width for smaller bars
+                    (int) ((count / (float) maxValue) * 300), // Reduced width for smaller bars
                     30
             );
             params.setMargins(0, 8, 0, 0);
@@ -103,21 +104,14 @@ public class BlockedStats extends AppCompatActivity {
             chartContainer.addView(row);
         }
 
-        // Navigation buttons
+        // Navigation buttons (restored to streaks-style home row)
         ImageButton btnAccPage = findViewById(R.id.account);
-        ImageButton btnStatsPage = findViewById(R.id.stats);
+        ImageButton btnStreaksPage = findViewById(R.id.stats);
         ImageButton btnHomePage = findViewById(R.id.home);
 
-        btnStatsPage.setOnClickListener(view ->
-                Toast.makeText(BlockedStats.this, "You're already on the Most Blocked Apps page!", Toast.LENGTH_SHORT).show()
-        );
+        NavigationUtility.setNavigation(this, btnStreaksPage, StreaksPage.class);
         NavigationUtility.setNavigation(this, btnAccPage, ProfileActivity.class);
         NavigationUtility.setNavigation(this, btnHomePage, Dashboard.class);
 
-        // Back button to Dashboard
-        ImageButton backButton = findViewById(R.id.back_button);
-        if (backButton != null) {
-            backButton.setOnClickListener(v -> finish());
-        }
     }
 }

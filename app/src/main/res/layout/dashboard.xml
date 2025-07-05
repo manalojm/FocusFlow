@@ -20,11 +20,11 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:orientation="vertical"
         tools:context=".MainActivity"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
-        android:layout_centerInParent="true">
+        tools:layout_editor_absoluteY="0dp">
 
         <RelativeLayout
             android:id="@+id/progress_layout"
@@ -43,13 +43,13 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_centerInParent="true"
                 android:background="@drawable/circular"
                 android:clickable="true"
                 android:focusable="true"
                 android:indeterminate="false"
                 android:progressDrawable="@drawable/timer_circle"
-                android:textAlignment="center"
-                android:layout_centerInParent="true"/>
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/progress_text"
@@ -57,13 +57,13 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:text="----"
                 android:textColor="#FFFFFF"
                 android:textSize="28sp"
-                android:textStyle="bold"
-                android:layout_centerInParent="true"/>
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
@@ -81,14 +81,15 @@
 
         <Button
             android:id="@+id/most_blocked_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_width="184dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="106dp"
+            android:layout_marginTop="15dp"
             android:backgroundTint="#24cda0"
             android:text="Most Blocked Apps"
             android:textColor="@android:color/white" />
         <!--            app:layout_constraintStart_toStartOf="@id/progress_layout"-->
-<!--            app:layout_constraitTop_toBottomOf="@id/progress_layout" />-->
+        <!--            app:layout_constraitTop_toBottomOf="@id/progress_layout" />-->
 
 
     </LinearLayout>
