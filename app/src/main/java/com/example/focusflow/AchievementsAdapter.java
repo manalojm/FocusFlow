@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,9 +31,30 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
     @Override
     public void onBindViewHolder(@NonNull AchievementViewHolder holder, int position) {
         Achievement achievement = achievementList.get(position);
-
         holder.nameTextView.setText(achievement.getName());
         holder.descriptionTextView.setText(achievement.getDescription());
+        holder.iconImageView.setImageResource(getIconRes(achievement));   // NEW
+    }
+
+    private int getIconRes(Achievement a) {                      // NEW
+        // If not yet unlocked, use default_achievement.png
+        if (!a.isUnlocked()) {                                   // Simple flag check
+            return R.drawable.default_achievement;               // Locked icon
+        }
+
+        // For unlocked badges, map id → drawable
+        switch (a.getId()) {                                     // Id tells which badge
+            case "achievement_1_day":
+                return R.drawable.achievement_1_day;             // 1‑day badge
+            case "achievement_7_days":
+                return R.drawable.achievement_7_days;            // 7‑day badge
+            case "achievement_30_days":
+                return R.drawable.achievement_30_days;           // 30‑day badge
+            case "achievement_100_days":
+                return R.drawable.achievement_100_days;          // 100‑day badge
+            default:
+                return R.drawable.default_achievement;           // Fallback safety
+        }
     }
 
     @Override
@@ -43,11 +65,13 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
     public static class AchievementViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView;
         TextView descriptionTextView;
+        ImageView iconImageView;
 
         public AchievementViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.achievement_name);
             descriptionTextView = itemView.findViewById(R.id.achievement_description);
+            iconImageView = itemView.findViewById(R.id.achievement_icon);
         }
     }
 }

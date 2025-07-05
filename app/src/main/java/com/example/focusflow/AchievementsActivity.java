@@ -90,6 +90,16 @@ public class AchievementsActivity extends AppCompatActivity {
                         }
                     }
 
+
+                    /*achievementList.clear();                       // Start fresh each time
+                    for (Achievement achievement : allAchievements) {
+                        // Mark as unlocked if its ID is in Firestore
+                        achievement.setUnlocked(unlockedAchievementIds.contains(achievement.getId()));
+                        // Add every badge—locked or unlocked—to the list
+                        achievementList.add(achievement);
+                    }*/
+
+
                     // Notify the adapter that the data has changed
                     adapter.notifyDataSetChanged();
                 })
