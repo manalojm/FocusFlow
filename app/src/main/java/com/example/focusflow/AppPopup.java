@@ -52,7 +52,7 @@ public class AppPopup extends AppCompatActivity {
                 boolean isNotSelf = !info.packageName.equals(myPackageName);
 
                 if (isUserApp && isNotSelf) {
-                    appInfoList.add(new AppInfo(info)); // Don't load icons immediately!
+                    appInfoList.add(new AppInfo(info));
                 }
             }
 

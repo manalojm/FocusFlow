@@ -65,7 +65,7 @@ public class AccessibilityService extends android.accessibilityservice.Accessibi
         stopService(new Intent(this, OverlayService.class));
     }
 
-    public static void displayAllApps(){//For Debugging
+    public static void displayAllApps(){
         for(String app : blockedApps) {
             Log.d("AccessibilityService", "All blocked apps: " + app);
         }

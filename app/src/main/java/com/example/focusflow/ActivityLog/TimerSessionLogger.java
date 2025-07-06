@@ -12,7 +12,7 @@ public class TimerSessionLogger {
     private static TimerSessionLogger instance;
     private TimerSessionDbHelper dbHelper;
     private Context context;
-    private Integer currentSessionId = null; // current active session
+    private Integer currentSessionId = null;
 
     private TimerSessionLogger(Context context) {
         this.context = context.getApplicationContext();
@@ -26,9 +26,7 @@ public class TimerSessionLogger {
         return instance;
     }
 
-    // Call this when starting a timer (or when setTime is called)
     public void startSession(long timeSet) {
-        // End the current session, if one exists.
         if (currentSessionId != null) {
             endSession();
         }
@@ -44,7 +42,6 @@ public class TimerSessionLogger {
         db.close();
     }
 
-    // Call this when the timer stops or finishes
     public void endSession() {
         if (currentSessionId == null) return;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -57,7 +54,6 @@ public class TimerSessionLogger {
         db.close();
     }
 
-    // Call this when an app is blocked during the session
     public void incrementAppsBlocked() {
         if (currentSessionId == null) return;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -69,7 +65,6 @@ public class TimerSessionLogger {
         db.close();
     }
 
-    // Retrieve all sessions for display in the log
     public List<TimerSession> getAllSessions() {
         List<TimerSession> sessions = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();

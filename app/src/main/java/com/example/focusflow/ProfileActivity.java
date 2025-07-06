@@ -40,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     private Uri selectedImageUri;
     private ImageView profilePic;
-    private FirebaseFirestore fStore; // Add this
+    private FirebaseFirestore fStore;
     private String Uid;
 
 
@@ -52,15 +52,15 @@ public class ProfileActivity extends AppCompatActivity {
         DocumentReference documentReference = fStore.collection("users").document(Uid);
 
         Map<String, Object> user = new HashMap<>();
-        user.put("pfp", imageUrl); // Only updating the profile picture field
+        user.put("pfp", imageUrl);
 
         documentReference.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
-                documentReference.update(user) // Update only the "pfp" field
+                documentReference.update(user)
                         .addOnSuccessListener(unused -> Log.d("TAG", "Profile picture updated for " + Uid))
                         .addOnFailureListener(e -> Log.e("Firestore", "Error updating profile picture", e));
             } else {
-                documentReference.set(user) // Create document if it doesn't exist
+                documentReference.set(user)
                         .addOnSuccessListener(unused -> Log.d("TAG", "Profile created with picture for " + Uid))
                         .addOnFailureListener(e -> Log.e("Firestore", "Error creating profile", e));
             }
@@ -75,7 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         username = mAuth.getCurrentUser();
-        fStore = FirebaseFirestore.getInstance(); // Initialize Firestore
+        fStore = FirebaseFirestore.getInstance();
 
 
         if (username == null) {
@@ -94,7 +94,7 @@ public class ProfileActivity extends AppCompatActivity {
                             selectedImageUri = data.getData();
                             Glide.with(this).load(selectedImageUri).into(profilePic);
 
-                            // Save to Firestore
+
                             savePFPtoFirestore(String.valueOf(selectedImageUri));
                         }
                     }
@@ -114,11 +114,9 @@ public class ProfileActivity extends AppCompatActivity {
                     });
         });
 
-        // display name and email of user
         TextView profileUsername = findViewById(R.id.profile_Username);
         TextView profileEmail = findViewById(R.id.profile_Email);
 
-        // Load user details from Firestore
         loadUserDetails(profileUsername, profileEmail);
 
 
@@ -171,7 +169,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        Button btnAchievements = findViewById(R.id.btn_achievements); // Make sure you have this button in your XML
+        Button btnAchievements = findViewById(R.id.btn_achievements);
         NavigationUtility.setNavigation(this, btnAchievements, AchievementsActivity.class);
     }
 
@@ -274,7 +272,6 @@ public class ProfileActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         for (Map<String, Object> streak : streaks) {
-            // Optional: provide your own document ID logic
             db.collection("streaks").document(uid)
                     .collection("entries")
                     .add(streak)

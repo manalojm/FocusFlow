@@ -31,19 +31,19 @@ import java.util.Map;
 
 public class BlockedStats extends AppCompatActivity {
 
-    CacheStorage cache = CacheStorage.getInstance(this);
-    Map<String, Integer> blockedApps = cache.getAllBlockCounts();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blocked_stats);
 
+        CacheStorage cache = CacheStorage.getInstance(this);
+        Map<String, Integer> blockedApps = cache.getAllBlockCounts();
+
         ConstraintLayout mainLayout = findViewById(R.id.main_layout);
-        mainLayout.setBackgroundResource(R.drawable.background); // Match streaks background
+        mainLayout.setBackgroundResource(R.drawable.background);
 
         Spinner filterSpinner = new Spinner(this);
-        filterSpinner.setBackgroundColor(Color.WHITE); // <-- Make background white
+        filterSpinner.setBackgroundColor(Color.WHITE);
 
         String[] filters = new String[]{"This Week", "This Month", "This Year"};
 
@@ -118,7 +118,7 @@ public class BlockedStats extends AppCompatActivity {
             LinearLayout bar = new LinearLayout(this);
             bar.setBackgroundColor(Color.parseColor("#3F51B5"));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    (int) ((count / (float) maxValue) * 300), // Reduced width for smaller bars
+                    (int) ((count / (float) maxValue) * 300),
                     30
             );
             params.setMargins(0, 8, 0, 0);

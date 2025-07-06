@@ -23,7 +23,6 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
     @NonNull
     @Override
     public AchievementViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate the simplified layout without an image view
         View view = LayoutInflater.from(context).inflate(R.layout.item_achievement, parent, false);
         return new AchievementViewHolder(view);
     }
@@ -33,16 +32,15 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
         Achievement achievement = achievementList.get(position);
         holder.nameTextView.setText(achievement.getName());
         holder.descriptionTextView.setText(achievement.getDescription());
-        holder.iconImageView.setImageResource(getIconRes(achievement));   // NEW
+        holder.iconImageView.setImageResource(getIconRes(achievement));
     }
 
     private int getIconRes(Achievement a) {                      // NEW
-        // If not yet unlocked, use default_achievement.png
         if (!a.isUnlocked()) {                                   // Simple flag check
             return R.drawable.default_achievement;               // Locked icon
         }
 
-        // For unlocked badges, map id → drawable
+
         switch (a.getId()) {                                     // Id tells which badge
             case "achievement_1_day":
                 return R.drawable.achievement_1_day;             // 1‑day badge

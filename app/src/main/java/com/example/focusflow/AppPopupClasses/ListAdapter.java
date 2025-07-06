@@ -34,32 +34,25 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Initialize convertView if null
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
         }
 
-        // Initialize all views first
         Switch appSwitch = convertView.findViewById(R.id.switch1);
         ImageView iconView = convertView.findViewById(R.id.icon);
         TextView nameView = convertView.findViewById(R.id.appName);
-        TextView countView = convertView.findViewById(R.id.blockCount); // This is the correct line
+        TextView countView = convertView.findViewById(R.id.blockCount);
 
-        // Now get the app info
         AppInfo appInfo = appList.get(position);
         PackageInfo packageInfo = appInfo.getPackageInfo();
 
-        // Set basic app info
         String appName = pm.getApplicationLabel(packageInfo.applicationInfo).toString();
         nameView.setText(appName);
         iconView.setImageResource(R.drawable.focusflow_logo);
 
-        // Set block count
         CacheStorage cache = CachePreloader.getCacheStorage();
         int blockCount = cache.getBlockCount(packageInfo.packageName);
-        countView.setText(String.valueOf(blockCount));
 
-        // Thread for loading icons without freezing UI
         new Thread(() -> {
             try {
                 Drawable appIcon = pm.getApplicationIcon(packageInfo.packageName);
@@ -81,11 +74,6 @@ public class ListAdapter extends BaseAdapter {
                 AccessibilityService.removeApp(packageInfo.packageName);
             } else {
                 AccessibilityService.addApp(packageInfo.packageName);
-                // Increment the block count when blocking an app
-                cache.incrementBlockCount(packageInfo.packageName);
-                // Update the count display
-                int newCount = cache.getBlockCount(packageInfo.packageName);
-                countView.setText(String.valueOf(newCount));
             }
         });
 

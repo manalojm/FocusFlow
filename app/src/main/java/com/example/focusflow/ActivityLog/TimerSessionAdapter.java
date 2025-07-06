@@ -48,18 +48,15 @@ public class TimerSessionAdapter extends BaseAdapter {
         TimerSession session = sessionList.get(position);
         TextView tvSessionInfo = convertView.findViewById(R.id.tvSessionInfo);
 
-        // Format the start and end times
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         String start = sdf.format(new Date(session.getStartTime()));
         String end = session.getEndTime() != 0 ? sdf.format(new Date(session.getEndTime())) : "Ongoing";
 
-        // Convert the time set (stored in ms) to hours and minutes.
         long timeSetMs = session.getTimeSet();
         long hours = timeSetMs / 3600000;
         long minutes = (timeSetMs % 3600000) / 60000;
         String timeSetFormatted = hours + " hours and " + minutes + " minutes";
 
-        // For apps blocked, simply take the count from the CacheStorage blocked list.
         CacheStorage cache = CachePreloader.getCacheStorage();
         int appsBlocked = cache.getBlockedApps().size();
 

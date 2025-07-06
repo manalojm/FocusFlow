@@ -40,14 +40,11 @@ public class OverlayService extends Service {
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         overlayView = LayoutInflater.from(this).inflate(R.layout.blocking_overlay, null);
 
-        // Get a random block message
         String message = getRandomBlockMessage(this);
 
-        // Find the TextView and set the message
         TextView messageTextView = overlayView.findViewById(R.id.blocking_message);
         messageTextView.setText(message);
 
-        // Set up fullscreen window parameters
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
@@ -59,13 +56,11 @@ public class OverlayService extends Service {
                 PixelFormat.TRANSLUCENT
         );
 
-        // Hide navigation bar (for devices with soft keys)
         params.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
         windowManager.addView(overlayView, params);
 
-        // Dismiss button logic
         Button dismissButton = overlayView.findViewById(R.id.dismiss);
         dismissButton.setOnClickListener(v -> {
             Intent home = new Intent(Intent.ACTION_MAIN);
@@ -91,7 +86,6 @@ public class OverlayService extends Service {
         return null;
     }
 
-    // Load messages from raw resources
     private List<String> loadBlockMessagesFromRaw(Context context) {
         List<String> messages = new ArrayList<>();
         try {
@@ -112,7 +106,6 @@ public class OverlayService extends Service {
         return messages;
     }
 
-    // Get a random block message
     private String getRandomBlockMessage(Context context) {
         List<String> messages = loadBlockMessagesFromRaw(context);
         if (messages.isEmpty()) {

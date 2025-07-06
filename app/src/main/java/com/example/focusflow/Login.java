@@ -44,7 +44,7 @@ public class Login extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            NavigationUtility.instantNavigation(this, SettingsRedirect.class); // Redirect to SettingsRedirect instead of Login
+            NavigationUtility.instantNavigation(this, SettingsRedirect.class); 
         }
     }
 
@@ -79,7 +79,6 @@ public class Login extends AppCompatActivity {
             String username = editTextUsername.getText().toString().trim();
             String password = editTextPassword.getText().toString().trim();
 
-            // Prevent login with empty fields
             if (TextUtils.isEmpty(username)) {
                 Toast.makeText(Login.this, "Enter username", Toast.LENGTH_SHORT).show();
                 return;
@@ -89,7 +88,6 @@ public class Login extends AppCompatActivity {
                 return;
             }
 
-            // Firebase authentication
             mAuth.signInWithEmailAndPassword(username, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -105,7 +103,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void requestNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // API 33+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
                     != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this,

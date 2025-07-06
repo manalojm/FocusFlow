@@ -56,11 +56,9 @@ public class SignUpPage extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.signup);
 
-        // Initialize Firebase
         mAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
-        // Initialize UI Elements
         editTextUsername = findViewById(R.id.username);
         editTextPassword = findViewById(R.id.password);
         editTextEmail = findViewById(R.id.email);
@@ -112,7 +110,6 @@ public class SignUpPage extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // User successfully registered in Firebase Authentication
                         FirebaseUser firebaseUser = mAuth.getCurrentUser();
                         if (firebaseUser != null) {
                             Uid = firebaseUser.getUid();
@@ -134,8 +131,7 @@ public class SignUpPage extends AppCompatActivity {
         documentReference.set(user)
                 .addOnSuccessListener(unused -> Log.d("TAG", "User Profile created for " + userId))
                 .addOnFailureListener(e -> Log.e("TAG", "Error saving user data", e));
-
-        // Redirect to Login Page after saving user data
+        
         startActivity(new Intent(getApplicationContext(), Login.class));
         finish();
     }

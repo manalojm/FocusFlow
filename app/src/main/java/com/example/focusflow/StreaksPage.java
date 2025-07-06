@@ -43,24 +43,19 @@ public class StreaksPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.streaks);
 
-        // Initialize Firestore and get user ID
         db = FirebaseFirestore.getInstance();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        // Reference UI elements
         streakCountTextView = findViewById(R.id.streak_days);
-        calendarView = findViewById(R.id.materialCalendar); // Ensure this ID is correct
+        calendarView = findViewById(R.id.materialCalendar);
 
-        // Fetch streak count and streak dates
         fetchStreakCount();
-        fetchStreakDates(); // New function to highlight streaks
+        fetchStreakDates();
 
-        // Buttons
         ImageButton btnAccPage = findViewById(R.id.account);
         ImageButton btnStatsPage = findViewById(R.id.stats);
         ImageButton btnHomePage = findViewById(R.id.home);
 
-        // Navigation
         btnStatsPage.setOnClickListener(view ->
                 Toast.makeText(StreaksPage.this, "You're already on the Streaks Page!", Toast.LENGTH_SHORT).show()
         );
@@ -84,7 +79,6 @@ public class StreaksPage extends AppCompatActivity {
                         Date date = sdf.parse(dateStr);
                         Calendar cal = Calendar.getInstance();
                         cal.setTime(date);
-                        // Clear time fields to avoid false mismatch
                         cal.set(Calendar.HOUR_OF_DAY, 0);
                         cal.set(Calendar.MINUTE, 0);
                         cal.set(Calendar.SECOND, 0);
@@ -95,7 +89,6 @@ public class StreaksPage extends AppCompatActivity {
                     }
                 }
 
-                // Sort dates
                 dates.sort(Comparator.comparing(Calendar::getTime));
 
                 int currentStreak = 1;
@@ -105,11 +98,9 @@ public class StreaksPage extends AppCompatActivity {
                     Calendar prev = dates.get(i - 1);
                     Calendar curr = dates.get(i);
 
-                    // Clone previous date and add one day
                     Calendar prevPlusOne = (Calendar) prev.clone();
                     prevPlusOne.add(Calendar.DAY_OF_YEAR, 1);
 
-                    // If current date is exactly 1 day after previous
                     if (curr.get(Calendar.YEAR) == prevPlusOne.get(Calendar.YEAR) &&
                             curr.get(Calendar.DAY_OF_YEAR) == prevPlusOne.get(Calendar.DAY_OF_YEAR)) {
                         currentStreak++;
@@ -119,7 +110,6 @@ public class StreaksPage extends AppCompatActivity {
                     }
                 }
 
-                // Set the streak count (you can choose to show currentStreak or maxStreak)
                 streakCountTextView.setText(String.valueOf(currentStreak));
                 checkAchievements(currentStreak);
 
@@ -148,7 +138,7 @@ public class StreaksPage extends AppCompatActivity {
 
                         String[] parts = dateStr.split("-");
                         int year = Integer.parseInt(parts[0]);
-                        int month = Integer.parseInt(parts[1]) - 1; // Firestore uses 1-based index
+                        int month = Integer.parseInt(parts[1]) - 1;
                         int day = Integer.parseInt(parts[2]);
 
                         streakDays.add(CalendarDay.from(year, month, day));
@@ -169,31 +159,25 @@ public class StreaksPage extends AppCompatActivity {
     }
 
     private void checkAchievements(int currentStreak) {
-        // Log the current streak for debugging
+
         Log.d("Achievements", "Checking achievements for streak: " + currentStreak);
 
-        // Define your achievements here
-        // You can fetch these from Firestore later if you want to make them dynamic
         Map<String, Integer> achievementThresholds = new HashMap<>();
         achievementThresholds.put("achievement_1_day", 1);
         achievementThresholds.put("achievement_7_days", 7);
         achievementThresholds.put("achievement_30_days", 30);
         achievementThresholds.put("achievement_100_days", 100);
 
-        // Check if the user has unlocked any achievements
         CollectionReference achievementsRef = db.collection("users").document(userId).collection("achievements");
 
         for (Map.Entry<String, Integer> entry : achievementThresholds.entrySet()) {
             String achievementId = entry.getKey();
             int requiredDays = entry.getValue();
 
-            // Check if the current streak meets the requirement
             if (currentStreak >= requiredDays) {
-                // Check if the user has already unlocked this achievement
                 achievementsRef.document(achievementId).get().addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
                         if (!task.getResult().exists()) {
-                            // The achievement is not yet unlocked, so unlock it!
                             unlockAchievement(achievementsRef, achievementId);
                         } else {
                             Log.d("Achievements", "Achievement '" + achievementId + "' already unlocked.");
@@ -224,7 +208,6 @@ public class StreaksPage extends AppCompatActivity {
     }
 
     private String getAchievementName(String achievementId) {
-        // You can make this more robust by storing names in a map or fetching them from Firestore
         switch (achievementId) {
             case "achievement_1_day":
                 return "First Step";

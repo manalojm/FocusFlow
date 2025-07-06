@@ -14,7 +14,6 @@ public class TimerSession {
         this.appsBlocked = appsBlocked;
     }
 
-    // Getters
     public int getId() { return id; }
     public long getStartTime() { return startTime; }
     public long getEndTime() { return endTime; }

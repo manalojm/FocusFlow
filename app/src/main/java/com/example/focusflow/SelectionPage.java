@@ -58,7 +58,6 @@ public class SelectionPage extends AppCompatActivity {
         NavigationUtility.setNavigation(this, btnStreaksPage, StreaksPage.class);
         NavigationUtility.setNavigation(this, btnAccPage, ProfileActivity.class);
 
-        // Load icons of blocked apps into appbox
         loadSelectedAppIcons();
 
     }
@@ -66,12 +65,12 @@ public class SelectionPage extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadSelectedAppIcons(); // Refresh icons whenever page is visible again
+        loadSelectedAppIcons();
     }
 
     private void loadSelectedAppIcons() {
         LinearLayout appbox = findViewById(R.id.appbox);
-        appbox.removeAllViews(); // Clear any previous icons
+        appbox.removeAllViews();
 
         PackageManager pm = getPackageManager();
         CacheStorage cache = CachePreloader.getCacheStorage();
@@ -83,9 +82,9 @@ public class SelectionPage extends AppCompatActivity {
 
                 ImageView iconView = new ImageView(this);
                 iconView.setImageDrawable(icon);
-                iconView.setBackgroundResource(R.drawable.rounded_background); // Set the rounded background
-                iconView.setPadding(16, 16, 16, 16); // Adjust padding as needed
-                iconView.setScaleType(ImageView.ScaleType.CENTER_CROP); // Ensure the icon scales properly
+                iconView.setBackgroundResource(R.drawable.rounded_background);
+                iconView.setPadding(16, 16, 16, 16);
+                iconView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(100, 100);
                 params.setMargins(10, 0, 10, 0);
                 iconView.setLayoutParams(params);

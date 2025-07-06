@@ -1,5 +1,6 @@
 package com.example.focusflow;
 
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.focusflow.AppPopupClasses.AccessibilityService;
@@ -44,13 +46,11 @@ public class Dashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
 
-        //Cache Storage Initiation
         cache = CachePreloader.getCacheStorage();
         playing = cache.getBlockState();
         time = cache.getTime();
         timerManager = TimerManager.getInstance();
 
-        //Buttons
         ProgressBar progressBar = findViewById(R.id.progress_bar);
         ImageButton btnAccPage = findViewById(R.id.account);
         ImageButton btnStatsPage = findViewById(R.id.stats);
@@ -63,13 +63,11 @@ public class Dashboard extends AppCompatActivity {
             startActivity(new Intent(Dashboard.this, BlockedStats.class));
         });
 
-        //Navigation
         btnHomePage.setOnClickListener(view -> {Toast.makeText(this, "You're already on the Dashboard!", Toast.LENGTH_SHORT).show();});
         NavigationUtility.setNavigation(this,btnStatsPage,StreaksPage.class);
         NavigationUtility.setNavigation(this,btnAccPage, ProfileActivity.class);
         NavigationUtility.setNavigation(this,progressBar,SelectionPage.class);
 
-        //Programmatic UI Setup
         setTime(time);
         if(playing){
             startCountdown(time);
@@ -87,13 +85,16 @@ public class Dashboard extends AppCompatActivity {
                 NavigationUtility.instantNavigation(this, SelectionPage.class);
                 return;
             }
-            if(playing){ //Clicking it when it says "Stop"
+            if(playing){
                 playing=false;
                 stopService(new Intent(Dashboard.this, OverlayService.class));
                 timerManager.stopTimer();
             }
-            else{ //Clicking it when it says "Play"
+            else{
                 playing=true;
+                for (String packageName : cache.getBlockedApps()) {
+                    cache.incrementBlockCount(packageName);
+                }
                 startCountdown(time);
             }
             cache.saveBlockState(playing);
@@ -122,7 +123,7 @@ public class Dashboard extends AppCompatActivity {
                 playing = false;
                 cache.saveBlockState(false);
                 updatePlayButton(findViewById(R.id.playstop));
-                // Update UI when timer finishes
+                sendTimerDoneNotification();
                 markTimerCompleted();
             }
         }, this);
@@ -138,8 +139,8 @@ public class Dashboard extends AppCompatActivity {
         String todayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
         Map<String, Object> data = new HashMap<>();
-        data.put("streakCount", FieldValue.increment(1)); // Increment streak count
-        data.put("completedDates", FieldValue.arrayUnion(todayDate)); // Add date to Firestore array
+        data.put("streakCount", FieldValue.increment(1));
+        data.put("completedDates", FieldValue.arrayUnion(todayDate));
 
         streakRef.set(data, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> Log.d("Firestore", "Streak marked successfully."))
@@ -176,6 +177,20 @@ public class Dashboard extends AppCompatActivity {
         Long seconds = ((ms % 3600000) % 60000) / 1000;
         String timeFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds);
         progressText.setText(timeFormatted);
+    }
+
+    private void sendTimerDoneNotification() {
+        String channelId = "FocusFlow";
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.focusflow_logo)
+                .setContentTitle("Focus Session Complete")
+                .setContentText("Great job! Your focus timer has ended.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(1, builder.build());
     }
 }
 
