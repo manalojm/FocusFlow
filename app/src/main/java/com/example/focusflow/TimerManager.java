@@ -62,7 +62,6 @@ public class TimerManager {
                 if (listener != null) {
                     listener.onFinish(); // Notify Dashboard
                 }
-                sendNotification(context);
             }
 
         }.start();
