@@ -77,18 +77,6 @@ public class TimerManager {
         }
     }
 
-    @SuppressLint("MissingPermission")
-    private void sendNotification(Context context) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NotificationConstants.channelID)
-                .setSmallIcon(R.drawable.focusflow_logo)
-                .setContentTitle("Time's Up!")
-                .setContentText("Timer has finished!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(1001, builder.build());
-    }
-
     public long getTimeRemaining() {
         return timeRemaining;
     }
