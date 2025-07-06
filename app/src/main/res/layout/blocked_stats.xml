@@ -49,6 +49,20 @@
             android:padding="16dp" />
     </ScrollView>
 
+    <TextView
+        android:id="@+id/static_data_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Note: Data is static until backend is complete."
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:layout_marginTop="500dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/chart_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- Bottom navigation background -->
     <View
         android:id="@+id/menuBackground"
