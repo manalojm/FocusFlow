@@ -34,26 +34,33 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-//Startup
+        // Initialize convertView if null
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
         }
 
+        // Initialize all views first
         Switch appSwitch = convertView.findViewById(R.id.switch1);
         ImageView iconView = convertView.findViewById(R.id.icon);
         TextView nameView = convertView.findViewById(R.id.appName);
+        TextView countView = convertView.findViewById(R.id.blockCount); // This is the correct line
 
+        // Now get the app info
         AppInfo appInfo = appList.get(position);
         PackageInfo packageInfo = appInfo.getPackageInfo();
+
+        // Set basic app info
         String appName = pm.getApplicationLabel(packageInfo.applicationInfo).toString();
         nameView.setText(appName);
         iconView.setImageResource(R.drawable.focusflow_logo);
 
-//Startup
+        // Set block count
+        CacheStorage cache = CachePreloader.getCacheStorage();
+        int blockCount = cache.getBlockCount(packageInfo.packageName);
+        countView.setText(String.valueOf(blockCount));
 
-        //Thread for loading icons without freezing UI
-        new Thread(() -> { //There is witchcraft in this thread, even i don't know how this works
+        // Thread for loading icons without freezing UI
+        new Thread(() -> {
             try {
                 Drawable appIcon = pm.getApplicationIcon(packageInfo.packageName);
                 ((AppPopup) context).runOnUiThread(() -> iconView.setImageDrawable(appIcon));
@@ -63,29 +70,33 @@ public class ListAdapter extends BaseAdapter {
         }).start();
 
         boolean isChecked = getSwitchState(packageInfo.packageName);
-        setSwitchState(appSwitch,isChecked);
+        setSwitchState(appSwitch, isChecked);
 
         convertView.setOnClickListener(v -> {
             appSwitch.toggle();
-            setSwitchState(appSwitch,appSwitch.isChecked());
+            setSwitchState(appSwitch, appSwitch.isChecked());
             Log.d("ListAdapter", "Clicked on app: " + packageInfo.packageName);
-            if(AccessibilityService.checkAppList(packageInfo.packageName)){
+
+            if (AccessibilityService.checkAppList(packageInfo.packageName)) {
                 AccessibilityService.removeApp(packageInfo.packageName);
-                return;
-            }
-            else{
+            } else {
                 AccessibilityService.addApp(packageInfo.packageName);
-                return;
+                // Increment the block count when blocking an app
+                cache.incrementBlockCount(packageInfo.packageName);
+                // Update the count display
+                int newCount = cache.getBlockCount(packageInfo.packageName);
+                countView.setText(String.valueOf(newCount));
             }
         });
+
         return convertView;
     }
+
     private void setSwitchState(Switch appSwitch, boolean isChecked) {
         appSwitch.setChecked(isChecked);
         if (isChecked) {
             appSwitch.getThumbDrawable().setTint(ContextCompat.getColor(context, R.color.custom_track_color));
-        }
-        else{
+        } else {
             appSwitch.getThumbDrawable().setTint(ContextCompat.getColor(context, R.color.custom_track_color_off));
         }
     }

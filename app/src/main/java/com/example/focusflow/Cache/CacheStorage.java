@@ -35,6 +35,18 @@ public class CacheStorage {
         editor.apply();
     }
 
+    public void incrementBlockCount(String packageName) {
+        // Get current count or default to 0
+        int currentCount = sharedPreferences.getInt(packageName + "_block_count", 0);
+        sharedPreferences.edit()
+                .putInt(packageName + "_block_count", currentCount + 1)
+                .apply();
+    }
+
+    public int getBlockCount(String packageName) {
+        return sharedPreferences.getInt(packageName + "_block_count", 0);
+    }
+
     public boolean getBlockState() {
         return preferences.getBoolean(KEY_PLAYING, false);
     }

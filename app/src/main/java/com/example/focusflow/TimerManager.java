@@ -1,8 +1,14 @@
 package com.example.focusflow;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.CountDownTimer;
 import android.util.Log;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.focusflow.ActivityLog.TimerSessionLogger;
 import com.example.focusflow.Cache.CachePreloader;
@@ -56,6 +62,7 @@ public class TimerManager {
                 if (listener != null) {
                     listener.onFinish(); // Notify Dashboard
                 }
+                sendNotification(context);
             }
 
         }.start();
@@ -69,6 +76,18 @@ public class TimerManager {
             cache.saveTime(timeRemaining);
             cache.saveBlockState(false);
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void sendNotification(Context context) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NotificationConstants.channelID)
+                .setSmallIcon(R.drawable.focusflow_logo)
+                .setContentTitle("Time's Up!")
+                .setContentText("Timer has finished!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        notificationManager.notify(1001, builder.build());
     }
 
     public long getTimeRemaining() {
