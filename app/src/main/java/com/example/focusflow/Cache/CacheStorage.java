@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class CacheStorage {
@@ -36,15 +38,14 @@ public class CacheStorage {
     }
 
     public void incrementBlockCount(String packageName) {
-        // Get current count or default to 0
-        int currentCount = sharedPreferences.getInt(packageName + "_block_count", 0);
-        sharedPreferences.edit()
+        int currentCount = preferences.getInt(packageName + "_block_count", 0);
+        preferences.edit()
                 .putInt(packageName + "_block_count", currentCount + 1)
                 .apply();
     }
 
     public int getBlockCount(String packageName) {
-        return sharedPreferences.getInt(packageName + "_block_count", 0);
+        return preferences.getInt(packageName + "_block_count", 0);
     }
 
     public boolean getBlockState() {
@@ -88,7 +89,20 @@ public class CacheStorage {
         editor.putLong(KEY_TIME, time);
         editor.apply();
     }
+
+    public Map<String, Integer> getAllBlockCounts() {
+        Map<String, Integer> counts = new HashMap<>();
+        for (String pkg : blockedApps) {
+            int count = getBlockCount(pkg);
+            if (count > 0) {
+                counts.put(pkg, count);
+            }
+        }
+        return counts;
+    }
+
     public Long getTime(){
         return preferences.getLong(KEY_TIME,0L);
     }
+
 }

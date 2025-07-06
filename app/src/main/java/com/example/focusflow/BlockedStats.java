@@ -1,5 +1,6 @@
 package com.example.focusflow;
 
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.focusflow.Cache.CacheStorage;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -28,13 +31,8 @@ import java.util.Map;
 
 public class BlockedStats extends AppCompatActivity {
 
-    Map<String, Integer> blockedApps = new HashMap<String, Integer>() {{
-        put("Instagram", 15);
-        put("TikTok", 25);
-        put("YouTube", 10);
-        put("Facebook", 5);
-        put("Reddit", 20);
-    }};
+    CacheStorage cache = CacheStorage.getInstance(this);
+    Map<String, Integer> blockedApps = cache.getAllBlockCounts();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +94,16 @@ public class BlockedStats extends AppCompatActivity {
             barLayout.setOrientation(LinearLayout.VERTICAL);
 
             TextView label = new TextView(this);
-            label.setText(app + " - " + count);
+            String labelText;
+            try {
+                CharSequence labelName = getPackageManager().getApplicationLabel(
+                        getPackageManager().getApplicationInfo(app, 0)
+                );
+                labelText = labelName + " - " + count;
+            } catch (PackageManager.NameNotFoundException e) {
+                labelText = app + " - " + count;
+            }
+            label.setText(labelText);
             label.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             label.setTextColor(Color.WHITE);
             label.setMaxLines(1);
