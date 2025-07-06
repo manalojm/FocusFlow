@@ -122,7 +122,6 @@ public class BlockedStats extends AppCompatActivity {
             chartContainer.addView(row);
         }
 
-        // Navigation buttons (restored to streaks-style home row)
         ImageButton btnAccPage = findViewById(R.id.account);
         ImageButton btnStreaksPage = findViewById(R.id.stats);
         ImageButton btnHomePage = findViewById(R.id.home);

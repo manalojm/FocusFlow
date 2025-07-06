@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/background">
 
-    <!-- Top banner -->
     <View
         android:id="@+id/menuHead"
         android:layout_width="match_parent"
@@ -17,7 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Title -->
     <TextView
         android:id="@+id/chart_title"
         android:layout_width="wrap_content"
@@ -31,7 +29,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
 
-    <!-- Chart container -->
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -63,7 +60,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Bottom navigation background -->
     <View
         android:id="@+id/menuBackground"
         android:layout_width="0dp"
@@ -73,7 +69,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Account button -->
     <ImageButton
         android:id="@+id/account"
         android:layout_width="80dp"
@@ -89,7 +84,6 @@
         app:layout_constraintEnd_toEndOf="@id/menuBackground"
         app:layout_constraintTop_toTopOf="@id/menuBackground" />
 
-    <!-- Stats button -->
     <ImageButton
         android:id="@+id/stats"
         android:layout_width="80dp"
@@ -105,7 +99,6 @@
         app:layout_constraintStart_toStartOf="@id/menuBackground"
         app:layout_constraintTop_toTopOf="@id/menuBackground" />
 
-    <!-- Home button -->
     <ImageButton
         android:id="@+id/home"
         android:layout_width="80dp"
