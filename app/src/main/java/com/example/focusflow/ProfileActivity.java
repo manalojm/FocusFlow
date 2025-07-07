@@ -168,9 +168,6 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
-
-        Button btnAchievements = findViewById(R.id.btn_achievements);
-        NavigationUtility.setNavigation(this, btnAchievements, AchievementsActivity.class);
     }
 
     private void loadUserDetails(TextView profileUsername, TextView profileEmail) {

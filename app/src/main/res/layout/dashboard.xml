@@ -5,16 +5,15 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <View
         android:id="@+id/menuHead"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/menu"
-        android:layout_centerInParent="true"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-    </View>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout
         android:id="@+id/main"
@@ -34,9 +33,6 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="150dp"
             android:layout_marginEnd="20dp">
-
-            <!--progress bar implementation-->
-
 
             <ProgressBar
                 android:id="@+id/progress_bar"
@@ -69,15 +65,13 @@
 
         <Button
             android:id="@+id/playstop"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="50dp"
-            android:layout_marginStart="125dp"
+            android:layout_marginStart="100dp"
             android:layout_marginTop="15dp"
             android:backgroundTint="#24cda0"
             android:text="Play"
-            android:textColor="#023020">
-
-        </Button>
+            android:textColor="#023020" />
 
         <Button
             android:id="@+id/most_blocked_button"
@@ -88,8 +82,19 @@
             android:backgroundTint="#24cda0"
             android:text="Most Blocked"
             android:textColor="#023020"
-            android:textAllCaps="false"
-            />
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_achievements"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="#24cda0"
+            android:text="Achievements"
+            android:textColor="#023020"
+            android:textAllCaps="false" />
+
 
     </LinearLayout>
 
@@ -115,8 +120,8 @@
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@id/menuBackground"
         app:layout_constraintEnd_toEndOf="@id/menuBackground"
-        app:layout_constraintTop_toTopOf="@id/menuBackground"
-        />
+        app:layout_constraintTop_toTopOf="@id/menuBackground" />
+
     <ImageButton
         android:id="@+id/home"
         android:layout_width="80dp"
@@ -131,8 +136,8 @@
         app:layout_constraintEnd_toStartOf="@id/account"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toEndOf="@id/stats"
-        app:layout_constraintTop_toTopOf="@id/menuBackground"
-        />
+        app:layout_constraintTop_toTopOf="@id/menuBackground" />
+
     <ImageButton
         android:id="@+id/stats"
         android:layout_width="80dp"
@@ -146,6 +151,7 @@
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@id/menuBackground"
         app:layout_constraintStart_toStartOf="@id/menuBackground"
-        app:layout_constraintTop_toTopOf="@id/menuBackground"
-        />
+        app:layout_constraintTop_toTopOf="@id/menuBackground" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

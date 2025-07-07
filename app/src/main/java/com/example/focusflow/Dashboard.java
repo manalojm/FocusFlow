@@ -67,6 +67,8 @@ public class Dashboard extends AppCompatActivity {
         NavigationUtility.setNavigation(this,btnStatsPage,StreaksPage.class);
         NavigationUtility.setNavigation(this,btnAccPage, ProfileActivity.class);
         NavigationUtility.setNavigation(this,progressBar,SelectionPage.class);
+        Button btnAchievements = findViewById(R.id.btn_achievements);
+        NavigationUtility.setNavigation(this, btnAchievements, AchievementsActivity.class);
 
         setTime(time);
         if(playing){
